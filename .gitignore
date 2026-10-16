@@ -2,4 +2,5 @@ node_modules/
 *.png
 !icons/*.png
 test*.js
-gen-*.js
+gen-v4.js
+perf-*.js
