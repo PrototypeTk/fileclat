@@ -108,6 +108,15 @@ body.nuit #bJouer,body.nuit .grosbtn:not(.clair){background:#eceef2;color:#1d202
 .badge.boss{background:#b8452f}.badge.geant{background:#5b4bb5}.badge.lim{background:#e88a1a}
 .pt.secret{background:radial-gradient(circle at 35% 30%,#ffe9a8,#c7a2ff 70%);color:#3a2a62;box-shadow:0 0 0 3px #fff,0 6px 18px rgba(120,80,200,.4)}.pt.secret.lock{background:#3a3550;color:#d9c9ff;font-size:24px}
 #win .etoilesW{font-size:40px;letter-spacing:6px;color:#e9a23b;margin:2px 0}#win .etoilesW i{font-style:normal;color:#d8cfc4}#win .gain{font-weight:700;color:var(--sub)}
+.qbar{height:6px;border-radius:3px;background:var(--chip);margin-top:6px;overflow:hidden}.qbar i{display:block;height:100%;background:#e9a23b}
+#rang{margin-top:14px;width:230px;text-align:center}#rang .rbar{height:8px;border-radius:4px;background:var(--glass);overflow:hidden;margin:5px 0 3px;box-shadow:inset 0 0 0 1px rgba(0,0,0,.06)}#rang .rbar i{display:block;height:100%;background:linear-gradient(90deg,#e9a23b,#f3c86b)}#rang small{color:var(--sub)}
+.roueW{position:relative;width:250px;height:250px;margin:6px auto 10px}#roueD{position:absolute;inset:0;border-radius:50%;overflow:hidden;background:conic-gradient(#f3c86b 0 45deg,#9fd8f0 45deg 90deg,#f4b4a4 90deg 135deg,#c7e7c1 135deg 180deg,#f3c86b 180deg 225deg,#c7b8f0 225deg 270deg,#9fd8f0 270deg 315deg,#ff9fb8 315deg 360deg);box-shadow:0 0 0 6px var(--ink)}
+.seg8{position:absolute;left:50%;top:0;width:0;height:50%;transform-origin:0 100%}.seg8 span{position:absolute;left:0;top:18px;transform:translateX(-50%) rotate(22.5deg);transform-origin:50% 107px;font-weight:800;font-size:13px;color:#2a2e35;white-space:nowrap;display:block;width:80px;text-align:center}
+.roueP{position:absolute;left:50%;top:-10px;transform:translateX(-50%);width:0;height:0;border-left:13px solid transparent;border-right:13px solid transparent;border-top:24px solid #e0302a;filter:drop-shadow(0 2px 2px rgba(0,0,0,.3))}
+.coffreG{position:relative;width:120px;height:100px;margin:10px auto 0}.cof-b{position:absolute;left:10px;right:10px;bottom:0;height:58px;border-radius:8px;background:linear-gradient(#b8862f,#8a5f1c);box-shadow:inset 0 0 0 4px #e9c46a}
+.cof-c{position:absolute;left:10px;right:10px;top:12px;height:34px;border-radius:14px 14px 4px 4px;background:linear-gradient(#d39a3a,#a8741f);box-shadow:inset 0 0 0 4px #e9c46a;transform-origin:50% 100%;z-index:2;animation:cofS .3s ease-in-out 3}
+.cof-l{position:absolute;left:52px;top:38px;width:16px;height:18px;border-radius:4px;background:#ffe08a;z-index:3}#coffre.ouvert .cof-c{animation:none;transform:translateY(-24px) rotate(-28deg);transition:transform .35s cubic-bezier(.3,1.6,.5,1)}#coffre.ouvert .coffreG::after{content:"";position:absolute;left:50%;top:40%;width:160px;height:160px;transform:translate(-50%,-50%);background:radial-gradient(rgba(255,226,140,.9),rgba(255,226,140,0) 65%);animation:cofG .8s ease-out forwards}
+@keyframes cofS{25%{transform:rotate(-7deg)}75%{transform:rotate(7deg)}}@keyframes cofG{from{opacity:0;transform:translate(-50%,-50%) scale(.3)}to{opacity:1;transform:translate(-50%,-50%) scale(1)}}
 </style></head><body>
 <canvas id="c"></canvas>
 <header id="top">
@@ -135,19 +144,22 @@ body.nuit #bJouer,body.nuit .grosbtn:not(.clair){background:#eceef2;color:#1d202
  <button class="grosbtn" id="bFermer">Fermer</button>
  <div class="ver" id="ver">Filéclat v1</div>
 </div></div>
-<div class="ecran" id="accueil"><svg width="110" height="110" viewBox="0 0 110 110"><rect x="10" y="10" width="90" height="90" rx="16" fill="#fbf7ef" stroke="#e2d6c6" stroke-width="2"/><path d="M28 82V44h30v22h16" fill="none" stroke="#2a2e35" stroke-width="7" stroke-linejoin="round"/><path d="M86 66 72 56v20z" fill="#2a2e35"/><circle cx="78" cy="30" r="10" fill="#3a8f86"/></svg><div id="solde"><span class="ecl"></span><span id="soldeN">0</span></div><h1>Filéclat</h1><p id="accSub"></p><button id="bJouer">Jouer</button><div class="rang"><button id="bDefi">Défi du jour</button><button id="bCadeau">Cadeau du jour</button><button id="bPerso">Personnaliser</button><button id="bSucces">Succès</button></div><div class="ver" id="ver2"></div></div>
+<div class="ecran" id="accueil"><svg width="110" height="110" viewBox="0 0 110 110"><rect x="10" y="10" width="90" height="90" rx="16" fill="#fbf7ef" stroke="#e2d6c6" stroke-width="2"/><path d="M28 82V44h30v22h16" fill="none" stroke="#2a2e35" stroke-width="7" stroke-linejoin="round"/><path d="M86 66 72 56v20z" fill="#2a2e35"/><circle cx="78" cy="30" r="10" fill="#3a8f86"/></svg><div id="solde"><span class="ecl"></span><span id="soldeN">0</span></div><h1>Filéclat</h1><p id="accSub"></p><button id="bJouer">Jouer</button><div class="rang"><button id="bDefi">Défi du jour</button><button id="bCadeau">Cadeau du jour</button><button id="bPerso">Personnaliser</button><button id="bSucces">Succès</button><button id="bQuetes">Quêtes</button><button id="bRoue">Roue</button></div><div id="rang"><b id="rangN">Rang 0</b><div class="rbar"><i id="rangB"></i></div><small id="rangX"></small></div><div class="ver" id="ver2"></div></div>
 <div class="ecran" id="carte" hidden><div id="carteTop"><button class="ic" id="bCarteRet" aria-label="Retour"><svg viewBox="0 0 24 24" fill="none" stroke="#2a2e35" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg></button><h2>Niveaux</h2></div><div id="tl"><div id="tlIn"></div></div></div>
-<div class="voile" id="win" hidden><div class="carte"><h2>Bravo !</h2><p id="winTxt"></p><div class="etoilesW" id="winEt"></div><p class="gain" id="winGain"></p><button class="grosbtn" id="bSuite">Niveau suivant</button><button class="grosbtn clair" id="bCarte">Voir les niveaux</button></div></div>
+<div class="voile" id="win" hidden><div class="carte"><h2>Bravo !</h2><p id="winTxt"></p><div class="etoilesW" id="winEt"></div><p class="gain" id="winGain"></p><button class="grosbtn" id="bCoffre" hidden style="background:#b8862f">🎁 Ouvrir le coffre</button><button class="grosbtn" id="bSuite">Niveau suivant</button><button class="grosbtn clair" id="bCarte">Voir les niveaux</button></div></div>
 <div class="voile" id="echec" hidden><div class="carte" style="text-align:center;border-radius:26px;margin:0 16px auto;align-self:center"><h2>Plus de coups</h2><p style="color:var(--sub)">Il reste des flèches. Ta progression est gardée, essaie un autre ordre.</p><button class="grosbtn" id="bRecom">Recommencer</button><button class="grosbtn clair" id="bEchecCarte">Voir les niveaux</button></div></div>
 <div class="voile" id="conf" hidden style="z-index:10"><div class="carte" style="text-align:center;border-radius:26px;margin:0 16px auto;align-self:center"><h2 id="confT"></h2><p id="confP" style="color:var(--sub)"></p><button class="grosbtn" id="bConfOk">Acheter</button><button class="grosbtn clair" id="bConfNon">Annuler</button></div></div>
 <div class="ecran" id="perso" hidden><div class="haut"><button class="ic" id="bPersoRet" aria-label="Retour"><svg viewBox="0 0 24 24" fill="none" stroke="#2a2e35" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg></button><h2>Personnaliser</h2><span id="solde2" style="font-weight:750"></span></div>
  <div class="tabs"><button class="tab on" data-t="cube">Cube</button><button class="tab" data-t="fleches">Flèches</button><button class="tab" data-t="bonus">Bonus</button></div><div class="defil" id="persoL"></div></div>
 <div class="ecran" id="succes" hidden><div class="haut"><button class="ic" id="bSuccRet" aria-label="Retour"><svg viewBox="0 0 24 24" fill="none" stroke="#2a2e35" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg></button><h2>Succès</h2><span id="succN" style="font-weight:700"></span></div><div class="defil" id="succL"></div></div>
+<div class="voile" id="coffre" hidden style="z-index:11;align-items:center"><div class="carte" style="text-align:center;border-radius:26px;margin:0 16px;"><div class="coffreG"><div class="cof-c"></div><div class="cof-b"></div><div class="cof-l"></div></div><h2>Coffre</h2><p id="cofR" class="gain" style="font-size:18px;min-height:26px"></p><button class="grosbtn" id="bCofOk">Super</button></div></div>
+<div class="voile" id="roue" hidden style="z-index:11;align-items:center"><div class="carte" style="text-align:center;border-radius:26px;margin:0 16px"><h2>Roue de la chance</h2><div class="roueW"><div id="roueD"></div><div class="roueP"></div></div><p id="roueR" class="gain" style="min-height:24px"></p><button class="grosbtn" id="bTourner">Tourner</button><button class="grosbtn clair" id="bRoueF">Fermer</button></div></div>
+<div class="ecran" id="quetes" hidden><div class="haut"><button class="ic" id="bQRet" aria-label="Retour"><svg viewBox="0 0 24 24" fill="none" stroke="#2a2e35" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg></button><h2>Quêtes de la semaine</h2></div><div class="defil"><div id="rang2"></div><div id="qL"></div><h3 style="font-size:15px;margin:18px 0 4px">Ensembles</h3><div id="ensL"></div></div></div>
 <script src="gen-niveaux.js"></script>
 <script type="importmap">{"imports":{"three":"./vendor/three.module.min.js"}}</script>
 <script type="module">
 import * as THREE from 'three';
-const VERSION='v4';window.__version=VERSION;
+const VERSION='v5';window.__version=VERSION;
 const $=id=>document.getElementById(id);
 // ---------- niveaux ----------
 let LV=[],DATA=null,NMAIN=15;// niveaux précalculés hors ligne par gen-niveaux.js -> niveaux.json
@@ -198,7 +210,7 @@ function vagues(W){const A=W.arrows,al=A.map(()=>true),ic=A.map(a=>a.ice),oc=new
  while(left){const f=A.filter(ok);if(!f.length)return 0;r++;for(const a of f){al[a.id]=false;left--;a.body.forEach(c=>oc[c]=-1);for(const j of a.nb)if(al[j]&&ic[j])ic[j]--}}return r}
 const cacheW={};function gen(i){if(cacheW[i])return cacheW[i];const W=build(DATA[i]);W.depth=vagues(W);return cacheW[i]=W}
 // ---------- sauvegarde ----------
-const KEY='fileclatSauvegarde';let S={v:2,unlocked:1,cur:1,done:{},stars:{},lv:{},vol:70,mute:false,vib:true,vu:{},zen:false,mvol:40,mmute:false,nuit:'auto',ecl:{earn:0,spent:0},own:{},eq:{theme:'zone',tex:'uni',trail:'lumineuse',part:'poussiere',win:'eclats'},log:[],res:{h:0,g:0,b:0},buy:{},daily:{streak:0,best:0,last:''},gift:{last:'',ts:0},ach:{},sec:{},stat:{}};
+const KEY='fileclatSauvegarde';let S={v:2,unlocked:1,cur:1,done:{},stars:{},lv:{},vol:70,mute:false,vib:true,vu:{},zen:false,mvol:40,mmute:false,nuit:'auto',ecl:{earn:0,spent:0},own:{},eq:{theme:'zone',tex:'uni',trail:'lumineuse',part:'poussiere',win:'eclats'},log:[],res:{h:0,g:0,b:0},buy:{},daily:{streak:0,best:0,last:''},gift:{last:'',ts:0},ach:{},sec:{},stat:{},xp:0,rankPaid:0,chest:{},sets:{},wheel:{last:'',ts:0},q:null,seed:0};
 let dbP;function db(){return dbP=dbP||new Promise((ok,ko)=>{const q=indexedDB.open('fileclat',1);q.onupgradeneeded=()=>q.result.createObjectStore('kv');q.onsuccess=()=>ok(q.result);q.onerror=()=>ko(q.error)})}
 const idbGet=()=>db().then(d=>new Promise(ok=>{const r=d.transaction('kv').objectStore('kv').get(KEY);r.onsuccess=()=>ok(r.result||null);r.onerror=()=>ok(null)})).catch(()=>null);
 const idbPut=v=>db().then(d=>new Promise(ok=>{const t=d.transaction('kv','readwrite');t.objectStore('kv').put(v,KEY);t.oncomplete=ok;t.onerror=ok})).catch(()=>{});
@@ -208,8 +220,12 @@ function merge(a,b){if(!a)return b;if(!b)return a;const na=(a.ts||0)>=(b.ts||0),
  m.ecl={earn:Math.max(a.ecl?.earn||0,b.ecl?.earn||0),spent:Math.max(a.ecl?.spent||0,b.ecl?.spent||0)};m.own={...(o.own||{}),...(m.own||{})};m.ach={...(o.ach||{}),...(m.ach||{})};m.sec={...(o.sec||{}),...(m.sec||{})};
  const lg=new Map();for(const x of[...(o.log||[]),...(m.log||[])])lg.set(x.id,x);m.log=[...lg.values()].sort((x,y)=>x.t-y.t);
  const da=a.daily||{},dbb=b.daily||{};m.daily={...(m.daily||{}),best:Math.max(da.best||0,dbb.best||0)};const ga=a.gift||{},gb=b.gift||{};m.gift=(ga.last||'')>=(gb.last||'')?{...ga}:{...gb};m.gift.ts=Math.max(ga.ts||0,gb.ts||0);
- m.stat={...(o.stat||{}),...(m.stat||{})};return m}
-function saveNow(){if(window.__gel)return;S.ts=Date.now();try{const old=JSON.parse(localStorage.getItem(KEY)||'null');if(old){if(old.unlocked>S.unlocked)S.unlocked=old.unlocked;if(old.ecl){S.ecl.earn=Math.max(S.ecl.earn,old.ecl.earn||0);S.ecl.spent=Math.max(S.ecl.spent,old.ecl.spent||0)}S.own={...(old.own||{}),...S.own};S.ach={...(old.ach||{}),...S.ach}}localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}idbPut(JSON.parse(JSON.stringify(S)))}
+ m.stat={...(o.stat||{}),...(m.stat||{})};
+ m.xp=Math.max(a.xp||0,b.xp||0);m.rankPaid=Math.max(a.rankPaid||0,b.rankPaid||0);m.chest={...(o.chest||{}),...(m.chest||{})};m.sets={...(o.sets||{}),...(m.sets||{})};m.seed=a.seed&&b.seed?Math.min(a.seed,b.seed):(a.seed||b.seed||0);
+ const wa=a.wheel||{},wb=b.wheel||{};m.wheel=(wa.last||'')>=(wb.last||'')?{...wa}:{...wb};m.wheel.ts=Math.max(wa.ts||0,wb.ts||0);
+ if(a.q&&b.q&&a.q.wk==b.q.wk){m.q={wk:a.q.wk,list:a.q.list.map((q,i)=>{const r=b.q.list[i]||q;return{...q,prog:Math.max(q.prog,r.prog),claimed:q.claimed||r.claimed}})}}else if(a.q||b.q){const qa=a.q?.wk||'',qb=b.q?.wk||'';m.q=qa>=qb?a.q:b.q}
+ return m}
+function saveNow(){if(window.__gel)return;S.ts=Date.now();try{const old=JSON.parse(localStorage.getItem(KEY)||'null');if(old){if(old.unlocked>S.unlocked)S.unlocked=old.unlocked;S.xp=Math.max(S.xp||0,old.xp||0);S.rankPaid=Math.max(S.rankPaid||0,old.rankPaid||0);S.chest={...(old.chest||{}),...S.chest};if(old.ecl){S.ecl.earn=Math.max(S.ecl.earn,old.ecl.earn||0);S.ecl.spent=Math.max(S.ecl.spent,old.ecl.spent||0)}S.own={...(old.own||{}),...S.own};S.ach={...(old.ach||{}),...S.ach}}localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}idbPut(JSON.parse(JSON.stringify(S)))}
 addEventListener('pagehide',saveNow);document.addEventListener('visibilitychange',()=>{if(document.hidden)saveNow()});
 navigator.storage?.persist?.().catch(()=>{});
 // ---------- sons ----------
@@ -328,7 +344,7 @@ function stepAnims(now){if(!anims.length)return;const keep=[];let ch=false;
 function tapArrow(id,e){const a=W.arrows[id];if(!alive[id]||won||lost)return;
  if(mode=='gomme'){mode='';useBonus(1);snd.bonus();remove([[id,Math.max(0,playEnd(a))]]);return}
  lastEnd=e;if(playable(a,e)){moves++;used++;const now=performance.now();combo=now-lastOk<1600?combo+1:1;lastOk=now;S.stat.combo=Math.max(S.stat.combo||0,combo);snd.glisse(combo);
-  if(combo>=2){showCombo(combo);vib(VIB.combo(combo));if(combo>=3&&comboGain<10){comboGain++;gain(1)}if(combo>=10)ach('combo10')}else vib(VIB.ok);remove([[id,e]],1)}
+  if(combo>=2){showCombo(combo);vib(VIB.combo(combo));if(combo>=3&&comboGain<10){comboGain++;gain(1)}if(combo>=10)ach('combo10');if(combo==5)qProg('combo5')}else vib(VIB.ok);remove([[id,e]],1)}
  else{combo=0;lastOk=0;if(!S.zen){moves++;used++;err++;vib(VIB.err)}snd.bloque();
   if(ice[id])toast(ice[id]==2?'Gelée : 2 couches à faire fondre':'Gelée : fais sortir une voisine');else if(locked(a))toast('Cadenas : sors d’abord la clé de cette couleur');
   {const o=anims.find(x=>x.a.id==id&&x.kind=='bump');if(o)o.t0=performance.now();else startAnim(a,e,'bump')}lvState();ui();checkLimit()}}
@@ -361,7 +377,7 @@ $('bGomme').onclick=()=>{if(avail(1)<=0&&mode!='gomme')return;snd.clic();mode=mo
 $('bBag').onclick=()=>{if(avail(2)<=0||won)return;const f=playList();if(!f.length)return;useBonus(2);snd.bonus();snd.glisse();remove(f)};
 $('bUndo').onclick=()=>{if(won)return;const u=undo.pop();if(!u)return;snd.clic();if(u.c){used=Math.max(0,used-u.c);moves=Math.max(0,moves-u.c)}combo=0;for(const [id] of u.g){alive[id]=true;for(const c of W.arrows[id].body)occ[c]=id}ice=u.ice;anims=anims.filter(x=>{if(u.g.some(([id])=>id==x.a.id)){scene.remove(x.m);return false}return true});won=false;rebuild();lvState();ui()};
 $('bBulle').onclick=()=>{S.vu[$('bulle').dataset.m]=1;saveNow();nextBulle()};
-let regUI=function(){$('vol').value=S.vol;$('swMute').setAttribute('aria-checked',S.mute);$('swVib').setAttribute('aria-checked',canVib&&S.vib);$('swVib').disabled=!canVib;if(!canVib)$('vibNote').textContent=iOS?'Non disponible sur iPhone':'Non disponible sur cet appareil'}
+let accUI0;let regUI=function(){$('vol').value=S.vol;$('swMute').setAttribute('aria-checked',S.mute);$('swVib').setAttribute('aria-checked',canVib&&S.vib);$('swVib').disabled=!canVib;if(!canVib)$('vibNote').textContent=iOS?'Non disponible sur iPhone':'Non disponible sur cet appareil'}
 $('bReg').onclick=()=>{snd.clic();regUI();$('reg').hidden=false};
 $('bFermer').onclick=()=>{$('reg').hidden=true};$('reg').onclick=e=>{if(e.target.id=='reg')$('reg').hidden=true};
 $('vol').oninput=e=>{S.vol=+e.target.value;ac();saveNow()};$('vol').onchange=()=>snd.clic();
@@ -393,7 +409,7 @@ const INTRO={boss:n=>`<b>Patron de zone !</b> Un cube plus gros qui mélange tou
  secret:n=>`<b>Niveau secret !</b> Débloqué grâce à tes 3 étoiles partout dans la zone.`};
 const INTRO_IC={boss:'👑',geant:'🗻',limf:'⏳',secret:'✨'};
 // ---- monnaie, réserve, gains ----
-const DEF=JSON.parse(JSON.stringify({ecl:{earn:0,spent:0},own:{},eq:{theme:'zone',tex:'uni',trail:'lumineuse',part:'poussiere',win:'eclats'},res:{h:0,g:0,b:0},buy:{},daily:{streak:0,best:0,last:''},gift:{last:'',ts:0},ach:{},sec:{},stat:{}}));
+const DEF=JSON.parse(JSON.stringify({ecl:{earn:0,spent:0},own:{},eq:{theme:'zone',tex:'uni',trail:'lumineuse',part:'poussiere',win:'eclats'},res:{h:0,g:0,b:0},buy:{},daily:{streak:0,best:0,last:''},gift:{last:'',ts:0},ach:{},sec:{},stat:{},chest:{},sets:{},wheel:{last:'',ts:0}}));
 const bal=()=>Math.max(0,(S.ecl.earn||0)-(S.ecl.spent||0));
 function gain(n){if(!(n>0))return;S.ecl.earn+=n;soldeUI(true);saveNow()}
 function soldeUI(anim){for(const id of['soldeN'])$(id).textContent=bal();$('solde2').innerHTML=`<span class="ecl"></span>${bal()}`;if(anim){const e=$('solde');e.classList.remove('gain');void e.offsetWidth;e.classList.add('gain')}}
@@ -418,7 +434,7 @@ function pumpNotif(){if(notifOn||!notifQ.length)return;notifOn=true;const e=$('n
 function hstr(str){let h=2166136261;for(let i=0;i<str.length;i++){h^=str.charCodeAt(i);h=Math.imul(h,16777619)}return h>>>0}
 function pickRainbow(){const h=hstr(W.sig+':'+lvl),n=h%3,ids=new Set(),A=W.arrows.length;for(let k=0;k<n&&A;k++){let id=(hstr(h+'/'+k)%A);let g=0;while((ids.has(id)||W.arrows[id].ice||W.arrows[id].isKey)&&g++<A)id=(id+1)%A;ids.add(id)}return ids}
 const RB_REW=[['h','+1 indice'],['g','+1 gomme'],['e','+5 éclats']];
-function rainbowReward(id){const r=RB_REW[hstr(W.sig+id)%3];if(r[0]=='e')gain(5);else S.res[r[0]]=Math.min(RES_MAX,(S.res[r[0]]||0)+1);toast('🌈 Arc-en-ciel : '+r[1]);snd.bonus();vib(VIB.combo(4));const a=W.arrows[id];emitAt(ctr(a.body.at(-1)),40,'arc');ach('arcenciel');saveNow();setTimeout(ui,0)}
+function rainbowReward(id){const r=RB_REW[hstr(W.sig+id)%3];if(r[0]=='e')gain(5);else S.res[r[0]]=Math.min(RES_MAX,(S.res[r[0]]||0)+1);toast('🌈 Arc-en-ciel : '+r[1]);snd.bonus();vib(VIB.combo(4));const a=W.arrows[id];emitAt(ctr(a.body.at(-1)),40,'arc');ach('arcenciel');qProg('arc');saveNow();setTimeout(ui,0)}
 // ---- particules (pool fixe, aucune allocation par image) ----
 const PN=900,pPos=new Float32Array(PN*3),pCol=new Float32Array(PN*3),pVel=new Float32Array(PN*3),pLife=new Float32Array(PN),pG=new Float32Array(PN);let pHead=0,pAlive=0;
 const pGeo=new THREE.BufferGeometry();pGeo.setAttribute('position',new THREE.BufferAttribute(pPos,3).setUsage(THREE.DynamicDrawUsage));pGeo.setAttribute('color',new THREE.BufferAttribute(pCol,3).setUsage(THREE.DynamicDrawUsage));
@@ -442,16 +458,16 @@ function fxTick(t,dt){let any=false;if(pAlive){let live=0;for(let i=0;i<PN;i++){
 const BN=1100,bMesh=new THREE.InstancedMesh(new THREE.BoxGeometry(.92,.92,.14),new THREE.MeshLambertMaterial({color:0xffffff}),BN);bMesh.instanceMatrix.setUsage(THREE.DynamicDrawUsage);bMesh.visible=false;bMesh.frustumCulled=false;scene.add(bMesh);
 const bP=new Float32Array(BN*3),bV=new Float32Array(BN*3),bQ=[],bAx=new Float32Array(BN*3),bW=new Float32Array(BN);for(let i=0;i<BN;i++)bQ.push(new THREE.Quaternion());
 const burst={on:false,t0:0,n:0,kind:'eclats'};const _m=new THREE.Matrix4(),_q=new THREE.Quaternion(),_p=new THREE.Vector3(),_sc=new THREE.Vector3(),_ax=new THREE.Vector3();
-function burstStart(){const kind=S.eq.win,C=W.cells,step=Math.max(1,Math.ceil(C.length/BN));let n=0;const col=new THREE.Color();
- for(let c=0;c<C.length&&n<BN;c+=step){const p=ctr(c,0),nn=N[C[c].n];bP[n*3]=p.x;bP[n*3+1]=p.y;bP[n*3+2]=p.z;const sp=kind=='petales'?2.5:7+Math.random()*6;
-  bV[n*3]=nn[0]*sp+p.x*.6+(Math.random()-.5)*3;bV[n*3+1]=nn[1]*sp+p.y*.6+(Math.random()-.5)*3+(kind=='petales'?2:3);bV[n*3+2]=nn[2]*sp+p.z*.6+(Math.random()-.5)*3;
+function burstStart(){const kind=S.eq.win,soft=kind=='petales'||kind=='feuilles',C=W.cells,step=Math.max(1,Math.ceil(C.length/BN));let n=0;const col=new THREE.Color();
+ for(let c=0;c<C.length&&n<BN;c+=step){const p=ctr(c,0),nn=N[C[c].n];bP[n*3]=p.x;bP[n*3+1]=p.y;bP[n*3+2]=p.z;const sp=soft?2.5:7+Math.random()*6;
+  bV[n*3]=nn[0]*sp+p.x*.6+(Math.random()-.5)*3;bV[n*3+1]=nn[1]*sp+p.y*.6+(Math.random()-.5)*3+(soft?2:3);bV[n*3+2]=nn[2]*sp+p.z*.6+(Math.random()-.5)*3;
   bQ[n].setFromUnitVectors(new THREE.Vector3(0,0,1),new THREE.Vector3(...nn));_ax.set(Math.random()-.5,Math.random()-.5,Math.random()-.5).normalize();bAx[n*3]=_ax.x;bAx[n*3+1]=_ax.y;bAx[n*3+2]=_ax.z;bW[n]=4+Math.random()*10;
-  if(kind=='petales')col.setHSL(.93+Math.random()*.06,.7,.8);else col.copy(LOOK.c1).lerp(LOOK.c0,Math.random());bMesh.setColorAt(n,col);n++}
- bMesh.count=n;if(bMesh.instanceColor)bMesh.instanceColor.needsUpdate=true;burst.n=n;burst.kind=kind;burst.on=true;burst.t0=performance.now();bMesh.visible=true;
+  if(kind=='petales')col.setHSL(.93+Math.random()*.06,.7,.8);else if(kind=='feuilles')col.setHSL(.22+Math.random()*.1,.6,.5);else col.copy(LOOK.c1).lerp(LOOK.c0,Math.random());bMesh.setColorAt(n,col);n++}
+ bMesh.count=n;if(bMesh.instanceColor)bMesh.instanceColor.needsUpdate=true;burst.n=n;burst.kind=kind;burst.soft=soft;burst.on=true;burst.t0=performance.now();bMesh.visible=true;
  for(const m of[shapeMesh,markMesh,arrowMesh,rbMesh])if(m)m.visible=false;
  if(kind=='feu')for(let k=0;k<4;k++)setTimeout(()=>{if(burst.on)emitAt(new THREE.Vector3((Math.random()-.5)*W.K,(Math.random()-.2)*W.K,(Math.random()-.5)*W.K),70,'feu')},k*160)}
-function burstTick(t){const k=(t-burst.t0)/1000,dur=burst.kind=='petales'?1.3:.95;if(k>dur){burstStop();return}const g=burst.kind=='petales'?-3:-16,s=Math.max(0,1-Math.pow(k/dur,3));
- for(let i=0;i<burst.n;i++){_p.set(bP[i*3]+bV[i*3]*k,bP[i*3+1]+bV[i*3+1]*k+.5*g*k*k+(burst.kind=='petales'?Math.sin(k*6+i)*.4:0),bP[i*3+2]+bV[i*3+2]*k);_ax.set(bAx[i*3],bAx[i*3+1],bAx[i*3+2]);_q.setFromAxisAngle(_ax,bW[i]*k).multiply(bQ[i]);_sc.setScalar(s);_m.compose(_p,_q,_sc);bMesh.setMatrixAt(i,_m)}
+function burstTick(t){const k=(t-burst.t0)/1000,dur=burst.soft?1.3:.95;if(k>dur){burstStop();return}const g=burst.soft?-3:-16,s=Math.max(0,1-Math.pow(k/dur,3));
+ for(let i=0;i<burst.n;i++){_p.set(bP[i*3]+bV[i*3]*k,bP[i*3+1]+bV[i*3+1]*k+.5*g*k*k+(burst.soft?Math.sin(k*6+i)*.4:0),bP[i*3+2]+bV[i*3+2]*k);_ax.set(bAx[i*3],bAx[i*3+1],bAx[i*3+2]);_q.setFromAxisAngle(_ax,bW[i]*k).multiply(bQ[i]);_sc.setScalar(s);_m.compose(_p,_q,_sc);bMesh.setMatrixAt(i,_m)}
  bMesh.instanceMatrix.needsUpdate=true}
 function burstStop(){if(!burst.on&&!bMesh.visible)return;burst.on=false;bMesh.visible=false}
 // ---- victoire ----
@@ -460,13 +476,13 @@ function victoire(){const n=lvl+1,kind=kindOf(lvl),st=S.zen?0:stars(),old=S.star
  else if(kind=='secret'){S.done[n]=Math.min(S.done[n]??1e9,moves);S.sec[L.secret]=1;ach('secret'+L.secret)}
  if(kind=='daily'){const d=DATA[lvl].daily,D=S.daily;if(D.last!=d){if(!S.zen){D.streak=D.last==dayStr(-1,d)?D.streak+1:1;D.best=Math.max(D.best||0,D.streak);D.last=d;g+=15+2*Math.min(D.streak,10);ach('defi');if(D.streak>=7)ach('serie7')}else g+=5}}
  else g+=first?10+4*st:2+4*Math.max(0,st-old);
- if(st>old)S.stars[n]=st;S.lv[n]={fini:true};gain(g);
+ if(st>old)S.stars[n]=st;S.lv[n]={fini:true};gain(g);v5Win(kind,n,st);
  ach('premier');if(st==3)ach('sans_faute');if({pyr:1,croix:1,tunnel:1}[L.s])ach('f_'+L.s);if(L.r)ach('m_vir');if(L.lock)ach('m_cle');if(L.p)ach('m_portail');if(L.dbl)ach('m_double');if(L.ice)ach('m_glace');
  if(L.boss)ach('patron'+(zoneOf(lvl)+1));if(L.geant)ach('geant');if(L.lim!=null&&!S.zen)ach('limite');checkUnlocks();saveNow();
  snd.victoire();snd.eclat();vib(VIB.win);burstStart();
  setTimeout(()=>{$('winTxt').textContent=(kind=='daily'?'Défi du jour réussi':kind=='secret'?'Secret terminé':`Niveau ${n} terminé`)+` en ${moves} coup${moves>1?'s':''}`+(S.zen?' (mode zen).':err?`, ${err} erreur${err>1?'s':''}.`:', sans erreur.');
   $('winEt').innerHTML=S.zen?'':'★'.repeat(st)+'<i>'+'★'.repeat(3-st)+'</i>';$('winGain').innerHTML=g?`<span class="ecl"></span>+${g} éclats`+(kind=='daily'?` · série ${S.daily.streak} j`:''):'';
-  $('bSuite').textContent=kind!='main'?'Retour aux niveaux':n<NMAIN?'Niveau suivant':'Rejouer le niveau 1';$('win').hidden=false},kind=='daily'||S.eq.win=='petales'?1150:950)}
+  $('bCoffre').hidden=chestPend==null;$('bSuite').textContent=kind!='main'?'Retour aux niveaux':n<NMAIN?'Niveau suivant':'Rejouer le niveau 1';$('win').hidden=false},kind=='daily'||burst.soft?1150:950)}
 // ---- dates locales ----
 function dayStr(off=0,base){const d=base?new Date(base+'T12:00:00'):new Date();d.setDate(d.getDate()+off);return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')}
 // ---- défi du jour : généré à partir de la date, vérifié par le solveur (vagues) ----
@@ -557,10 +573,10 @@ const CAT=[
  {id:'eclats',cat:'win',tab:'fleches',nom:'Victoire : éclats',free:1},{id:'feu',cat:'win',tab:'fleches',nom:'Feu d’artifice',prix:130},{id:'petales',cat:'win',tab:'fleches',nom:'Pétales',zone:1}];
 const BPRIX={h:45,g:60,b:110},BNOM={h:'Indice',g:'Gomme',b:'Baguette'};
 const totStars=()=>Object.values(S.stars).reduce((a,b)=>a+b,0);
-function condOk(it){return it.free||(it.etoiles&&totStars()>=it.etoiles)||(it.succes&&S.ach[it.succes])||(it.zone&&zoneDone(it.zone-1))}
+function condOk(it){return(it.ens&&S.sets&&S.sets[it.ens])||it.free||(it.etoiles&&totStars()>=it.etoiles)||(it.succes&&S.ach[it.succes])||(it.zone&&zoneDone(it.zone-1))}
 const owned=it=>!!(condOk(it)||S.own[it.cat+':'+it.id]);
-function condTxt(it){return it.prix?`<span class="ecl"></span>${it.prix}`:it.etoiles?`${it.etoiles} étoiles (${totStars()})`:it.succes?'Succès « '+(ACH.find(a=>a[0]==it.succes)||[0,it.succes])[1]+' »':it.zone?`Terminer la zone ${it.zone}`:''}
-function checkUnlocks(){for(const it of CAT)if(!it.prix&&!it.free&&condOk(it)&&!S.own[it.cat+':'+it.id]){S.own[it.cat+':'+it.id]=Date.now();notif('🔓 Débloqué : '+it.nom)}}
+function condTxt(it){return it.ens?'Compléter l’'+SETS[it.ens].nom:it.prix?`<span class="ecl"></span>${it.prix}`:it.etoiles?`${it.etoiles} étoiles (${totStars()})`:it.succes?'Succès « '+(ACH.find(a=>a[0]==it.succes)||[0,it.succes])[1]+' »':it.zone?`Terminer la zone ${it.zone}`:''}
+function checkUnlocks(){for(const it of CAT)if(!it.prix&&!it.free&&condOk(it)&&!S.own[it.cat+':'+it.id]){S.own[it.cat+':'+it.id]=Date.now();notif('🔓 Débloqué : '+it.nom)}checkSets()}
 function prixBonus(k){const d=dayStr(),b=S.buy[k]&&S.buy[k].d==d?S.buy[k].n:0;return Math.round(BPRIX[k]*(1+.15*b))}
 function apercu(it){if(it.ap)return it.ap;if(it.cat=='theme'){const P=PALS[it.id];return`linear-gradient(135deg,${P.c[0]} 0 45%,${P.a} 45% 60%,${P.c[1]} 60%)`}
  if(it.cat=='tex'){drawCase(it.id,'#fbf7ef','#efe7da');return`url(${texCv.toDataURL()}) center/cover`}
@@ -576,10 +592,10 @@ let persoTab='cube';function persoUI(){soldeUI();const L=$('persoL');let h='';
 function equiper(it){if(!it||!owned(it))return false;S.eq[it.cat]=it.id;saveNow();applyLook();persoUI()}
 let confCb=null;function confirmer(nom,prix,cb){$('confT').textContent=nom;$('confP').innerHTML=bal()>=prix?`Acheter pour <span class="ecl"></span>${prix} éclats ? Solde : ${bal()}. Les achats ne sont pas remboursés.`:`Il te faut <span class="ecl"></span>${prix} éclats (solde : ${bal()}).`;$('bConfOk').disabled=bal()<prix;$('bConfOk').style.opacity=bal()<prix?.4:1;confCb=cb;$('conf').hidden=false}
 function payer(prix,id,what){if(!(prix>0)||bal()<prix){toast('Pas assez d’éclats');return false}S.ecl.spent+=prix;S.log.push({id:Date.now().toString(36)+Math.random().toString(36).slice(2,6),t:Date.now(),quoi:what,prix,solde:bal()});return true}
-function acheter(it){if(owned(it))return false;if(!payer(it.prix,0,it.cat+':'+it.id))return false;S.own[it.cat+':'+it.id]=Date.now();saveNow();soldeUI(true);snd.bonus();equiper(it);return true}
+function acheter(it){if(owned(it))return false;if(!payer(it.prix,0,it.cat+':'+it.id))return false;S.own[it.cat+':'+it.id]=Date.now();saveNow();soldeUI(true);snd.bonus();equiper(it);checkSets();return true}
 function acheterBonus(k,q){const pr=Math.round(prixBonus(k)*(q==3?2.6:1));if((S.res[k]||0)+q>RES_MAX){toast('Réserve pleine');return false}confirmer(BNOM[k]+(q>1?' ×'+q:''),pr,()=>{if(!payer(pr,0,'bonus:'+k+'x'+q))return;S.res[k]+=q;const d=dayStr();S.buy[k]=S.buy[k]&&S.buy[k].d==d?{d,n:S.buy[k].n+1}:{d,n:1};saveNow();soldeUI(true);snd.bonus();persoUI()})}
 function succUI(){const n=ACH.filter(a=>S.ach[a[0]]).length;$('succN').textContent=n+'/'+ACH.length;$('succL').innerHTML=ACH.map(a=>`<div class="succ${S.ach[a[0]]?' ok':''}"><div class="md">${S.ach[a[0]]?'🏅':'🔒'}</div><div><b>${a[1]}</b><br><small style="color:var(--sub)">${a[2]}</small></div></div>`).join('')}
-function accUI(){soldeUI();const D=S.daily;$('bDefi').innerHTML='Défi du jour'+(D.streak?` · 🔥${D.last==dayStr()||D.last==dayStr(-1)?D.streak:0}`:'');$('bDefi').classList.toggle('dispo',D.last!=dayStr());$('bCadeau').classList.toggle('dispo',giftReady());$('bCadeau').textContent=giftReady()?'Cadeau du jour':'Cadeau reçu ✓'}
+let accUI=function(){soldeUI();const D=S.daily;$('bDefi').innerHTML='Défi du jour'+(D.streak?` · 🔥${D.last==dayStr()||D.last==dayStr(-1)?D.streak:0}`:'');$('bDefi').classList.toggle('dispo',D.last!=dayStr());$('bCadeau').classList.toggle('dispo',giftReady());$('bCadeau').textContent=giftReady()?'Cadeau du jour':'Cadeau reçu ✓'}
 function initV4(){applyLook();accUI();
  $('bDefi').onclick=()=>{ac();snd.clic();ouvrirDefi()};$('bCadeau').onclick=()=>{ac();claimGift()};
  $('bPerso').onclick=()=>{ac();snd.clic();persoUI();$('perso').hidden=false};$('bPersoRet').onclick=()=>{$('perso').hidden=true;applyLook()};
@@ -590,7 +606,7 @@ function initV4(){applyLook();accUI();
  $('swZen').onclick=()=>{S.zen=!S.zen;regUI();saveNow();snd.clic();ui()};
  document.querySelectorAll('#segNuit button').forEach(b=>b.onclick=()=>{S.nuit=b.dataset.v;saveNow();applyLook();regUI();snd.clic()});
  const r0=regUI;regUI=function(){r0();$('mvol').value=S.mvol;$('swMMute').setAttribute('aria-checked',S.mmute);$('swZen').setAttribute('aria-checked',S.zen);document.querySelectorAll('#segNuit button').forEach(b=>b.classList.toggle('on',b.dataset.v==S.nuit))};
- const oj=$('bJouer').onclick;$('bJouer').onclick=()=>{oj();};const ret=$('bCarteRet').onclick;$('bCarteRet').onclick=()=>{ret();applyLook()};checkUnlocks()}
+ initV5();const oj=$('bJouer').onclick;$('bJouer').onclick=()=>{oj();};const ret=$('bCarteRet').onclick;$('bCarteRet').onclick=()=>{ret();applyLook()};checkUnlocks()}
 window.__v4={get S(){return S},bal,gain,claimGift,giftReady,ouvrirDefi,makeDaily,dayStr,avail:i=>avail(i),useBonus,res:()=>({...S.res}),resUsed:()=>resUsed,limit,used:()=>used,err:()=>err,lost:()=>lost,won:()=>won,combo:()=>combo,
  rb:()=>[...rbSet],rbGot:()=>[...rbGot],applyLook,look:()=>({pal:LOOK.pal,dark:LOOK.dark,arrow:LOOK.arrow,case:LOOK.case,bg:getComputedStyle(document.body).getPropertyValue('--bg')}),contrast,PALS,
  burst:()=>({on:burst.on,n:burst.n,kind:burst.kind,vis:bMesh.visible}),particles:()=>{let n=0;for(let i=0;i<PN;i++)if(pLife[i]>0)n++;return n},fps:()=>{const f=fpsF;if(f.length<10)return 0;return(f.length-1)*1000/(f.at(-1)-f[0])},fpsReset:()=>{fpsF=[]},
@@ -599,9 +615,55 @@ window.__v4={get S(){return S},bal,gain,claimGift,giftReady,ouvrirDefi,makeDaily
  hintOnScreen(){if(!hint)return null;const a=W.arrows[hint[0]],c=hint[1]?a.body[0]:a.body.at(-1),p=ctr(c,0),n=new THREE.Vector3(...N[W.cells[c].n]),v=cam.position.clone().sub(p).normalize(),q=p.clone().project(cam);return{x:(q.x+1)/2*innerWidth,y:(1-q.y)/2*innerHeight,face:n.dot(v)}},
  camAnim:()=>!!camAnim,state:()=>({lvl:lvl+1,alive:alive.map(Boolean),ice:[...ice],moves,err,used,bon:[...bon],resUsed,undo:JSON.stringify(undo),cam:[...cam.position.toArray().map(v=>+v.toFixed(4)),...cam.up.toArray().map(v=>+v.toFixed(4))]})};
 
+// =================== v5 : coffres, quêtes, roue, ensembles, rang ===================
+const SETS={neon:{nom:'Ensemble Néon',items:['tex:neon','trail:comete','part:etoiles'],rec:{it:'trail:aurore'},txt:'Traînée aurore exclusive'},
+ fete:{nom:'Ensemble Fête',items:['part:confettis','win:feu','trail:arcenciel'],rec:{e:100},txt:'+100 éclats'},
+ nature:{nom:'Ensemble Nature',items:['theme:menthe','tex:bois','part:bulles'],rec:{it:'win:feuilles'},txt:'Victoire « feuilles » exclusive'}};
+CAT.push({id:'aurore',cat:'trail',tab:'fleches',nom:'Traînée aurore',ens:'neon'},{id:'feuilles',cat:'win',tab:'fleches',nom:'Victoire : feuilles',ens:'nature'});
+PSTY.aurore={c:()=>_c.setHSL(.38+Math.sin(performance.now()/400)*.12+Math.random()*.08,.85,.62),sp:.35,g:.4,l:.7};
+function seedOf(){if(!S.seed){S.seed=(Math.random()*2**31)|0;saveNow()}return S.seed}
+function itOwnedKey(k){const it=CAT.find(x=>x.cat+':'+x.id==k);return it&&owned(it)}
+function checkSets(){for(const [id,st] of Object.entries(SETS)){if(S.sets[id])continue;if(st.items.every(itOwnedKey)){S.sets[id]=Date.now();if(st.rec.e)gain(st.rec.e);if(st.rec.it)S.own[st.rec.it]=Date.now();notif('🧩 '+st.nom+' complet : '+st.txt);saveNow()}}}
+// ---- rang / expérience ----
+const th=r=>50*r*(r+1)/2;const rankOf=x=>{let r=0;while(x>=th(r+1))r++;return r};
+function xpGain(n){if(!(n>0))return;S.xp=(S.xp||0)+n;const r=rankOf(S.xp);while((S.rankPaid||0)<r){S.rankPaid=(S.rankPaid||0)+1;const R=S.rankPaid,e=15+5*R;gain(e);let t=`⭐ Rang ${R} : +${e} éclats`;if(R%5==0){S.res.b=Math.min(RES_MAX,(S.res.b||0)+1);t+=' et une baguette'}notif(t)}saveNow();rangUI()}
+function rangUI(){const x=S.xp||0,r=rankOf(x),a=th(r),b=th(r+1);$('rangN').textContent='Rang '+r;$('rangB').style.width=Math.round(100*(x-a)/(b-a))+'%';$('rangX').textContent=`${x-a} / ${b-a} XP`}
+// ---- quêtes de la semaine (renouvelées chaque lundi, heure locale) ----
+function weekKey(){const d=new Date();d.setDate(d.getDate()-((d.getDay()+6)%7));return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')}
+const QPOOL=[['niveaux','Termine {n} niveaux',[5,8]],['etoiles','Gagne {n} étoiles',[10,16]],['parfait','Termine {n} niveaux sans erreur',[2,4]],['combo5','Fais {n} combos ×5',[3,5]],['defi','Réussis {n} défis du jour',[2,3]],['arc','Attrape {n} flèches arc-en-ciel',[1,2]]];
+function quests(){const w=weekKey();if(!S.q||S.q.wk!=w){const h=hstr('quetes'+w+seedOf()),pool=[...QPOOL];const L=[];const n=3+h%3;let s=h;for(let i=0;i<n;i++){s=hstr(s+'/'+i);const [id,t,[a,b]]=pool.splice(s%pool.length,1)[0],goal=a+(s>>>4)%(b-a+1);L.push({id,t:t.replace('{n}',goal),goal,prog:0,claimed:false,rec:20+goal*5})}S.q={wk:w,list:L};saveNow()}return S.q.list}
+function qProg(id,k=1){if(S.zen&&id!='defi')return;for(const q of quests())if(q.id==id&&!q.claimed){const was=q.prog>=q.goal;q.prog=Math.min(q.goal,q.prog+k);if(!was&&q.prog>=q.goal)notif('📜 Quête finie : '+q.t)}saveNow()}
+function claimQuest(i){const q=quests()[i];if(!q||q.claimed||q.prog<q.goal)return false;q.claimed=true;gain(q.rec);xpGain(40);snd.bonus();saveNow();questUI();return true}
+function questUI(){quests();rangUI();$('qL').innerHTML=S.q.list.map((q,i)=>`<div class="item"><div class="ap" style="background:${q.claimed?'#3a8f86':q.prog>=q.goal?'#e9a23b':'#e2d9cf'};display:grid;place-items:center;font-size:24px">${q.claimed?'✓':'📜'}</div><div class="tx"><b>${q.t}</b><small>${q.prog}/${q.goal} · <span class="ecl"></span>${q.rec}</small><div class="qbar"><i style="width:${100*q.prog/q.goal}%"></i></div></div>${q.claimed?'':`<button data-q="${i}" ${q.prog<q.goal?'disabled style="opacity:.35"':''}>Réclamer</button>`}</div>`).join('')+`<p style="color:var(--sub);font-size:13px;text-align:center">Nouvelles quêtes lundi.</p>`;
+ $('qL').querySelectorAll('button[data-q]').forEach(b=>b.onclick=()=>claimQuest(+b.dataset.q))}
+// ---- roue de la chance ----
+const WSEG=[['e',5,'5'],['h',1,'Indice'],['e',10,'10'],['g',1,'Gomme'],['e',20,'20'],['b',1,'Baguette'],['e',10,'10'],['e',50,'50']],WW=[20,14,16,12,10,5,16,3];
+function wheelReady(){return S.wheel.last!=dayStr()&&Date.now()>=(S.wheel.ts||0)-36e5}
+function wheelPick(d){const tot=WW.reduce((a,b)=>a+b,0);let v=hstr('roue'+d+seedOf())%tot,i=0;while(v>=WW[i]){v-=WW[i];i++}return i}
+function spinWheel(){const d=dayStr();if(S.wheel.last==d){toast('Déjà tournée aujourd’hui');return -1}if(Date.now()<(S.wheel.ts||0)-36e5){toast('Horloge modifiée : réessaie plus tard');return -1}
+ const i=wheelPick(d),[k,n]=WSEG[i];S.wheel={last:d,ts:Date.now(),i};if(k=='e')S.ecl.earn+=n;else S.res[k]=Math.min(RES_MAX,(S.res[k]||0)+n);saveNow();
+ const r=$('roueD');r.style.transition='none';r.style.transform='rotate(0deg)';void r.offsetWidth;r.style.transition='transform 2.6s cubic-bezier(.17,.67,.2,1)';r.style.transform=`rotate(${360*5-(i*45+22.5)}deg)`;snd.clic();
+ setTimeout(()=>{soldeUI(true);snd.bonus();vib(VIB.combo(5));$('roueR').innerHTML=k=='e'?`<span class="ecl"></span>+${n} éclats`:'+1 '+BNOM[k].toLowerCase();accUI()},2650);return i}
+function roueUI(){const g=$('roueD');g.innerHTML=WSEG.map((s,i)=>`<div class="seg8" style="transform:rotate(${i*45}deg)"><span>${s[2]}</span></div>`).join('');$('bTourner').disabled=!wheelReady();$('bTourner').style.opacity=wheelReady()?1:.4;$('roueR').textContent=wheelReady()?'Un tour gratuit par jour':'Reviens demain'}
+// ---- coffres tous les 5 niveaux ----
+function chestReward(n){const h=hstr('coffre'+n+':'+seedOf()),t=h%10;if(t<5)return{e:30+(h>>>4)%31};if(t<8){const k=RK[(h>>>4)%3];return{b:k,n:k=='b'?1:1+(h>>>6)%2}}
+ const pool=CAT.filter(x=>x.prix&&!owned(x));if(!pool.length)return{e:60};return{it:pool[(h>>>4)%pool.length]}}
+let chestPend=null;function chestCheck(n){if(n%5||S.chest[n])return;chestPend=n}
+function openChest(){const n=chestPend;if(n==null||S.chest[n])return null;const r=chestReward(n);S.chest[n]={t:Date.now(),r:r.it?{it:r.it.cat+':'+r.it.id}:r};
+ if(r.e)gain(r.e);if(r.b)S.res[r.b]=Math.min(RES_MAX,(S.res[r.b]||0)+r.n);if(r.it)S.own[r.it.cat+':'+r.it.id]=Date.now();saveNow();checkSets();chestPend=null;
+ const ov=$('coffre');ov.hidden=false;ov.classList.remove('ouvert');$('cofR').innerHTML='';snd.clic();vib([15,40,15,40,15]);setTimeout(()=>{ov.classList.add('ouvert');snd.eclat();snd.bonus();$('cofR').innerHTML=r.e?`<span class="ecl"></span>+${r.e} éclats`:r.b?`+${r.n} ${BNOM[r.b].toLowerCase()}${r.n>1?'s':''} en réserve`:`Nouveau : ${r.it.nom}`},900);$('bCoffre').hidden=true;return S.chest[n].r}
+
+function v5Win(kind,n,st){xpGain(kind=='daily'?30:20+5*st);qProg('niveaux');if(st)qProg('etoiles',st);if(st==3)qProg('parfait');if(kind=='daily'&&!S.zen)qProg('defi');if(kind=='main')chestCheck(n)}
+function ensUI(){$('ensL').innerHTML=Object.entries(SETS).map(([id,st])=>{const k=st.items.filter(itOwnedKey).length;return`<div class="item${S.sets[id]?'':' verr'}"><div class="ap" style="background:${S.sets[id]?'#3a8f86':'#e2d9cf'};display:grid;place-items:center;font-size:24px">🧩</div><div class="tx"><b>${st.nom}</b><small>${st.items.map(x=>CAT.find(c=>c.cat+':'+c.id==x).nom).join(' · ')}</small><small style="display:block">${S.sets[id]?'Complet ✓ ':''+k+'/'+st.items.length+' · '}${st.txt}</small></div></div>`}).join('')}
+function initV5(){quests();rangUI();
+ $('bQuetes').onclick=()=>{snd.clic();questUI();ensUI();$('quetes').hidden=false};$('bQRet').onclick=()=>{$('quetes').hidden=true};
+ $('bRoue').onclick=()=>{ac();snd.clic();roueUI();$('roue').hidden=false};$('bRoueF').onclick=()=>{$('roue').hidden=true};$('bTourner').onclick=()=>{if(!wheelReady())return;$('bTourner').disabled=true;$('bTourner').style.opacity=.4;spinWheel()};
+ $('bCoffre').onclick=()=>{openChest()};$('bCofOk').onclick=()=>{$('coffre').hidden=true};
+ const a0=accUI;accUI=function(){a0();$('bRoue').classList.toggle('dispo',wheelReady());$('bQuetes').classList.toggle('dispo',quests().some(q=>q.prog>=q.goal&&!q.claimed))};accUI()}
+window.__v5={get S(){return S},rankOf,th,xpGain,quests,qProg,claimQuest,weekKey,spinWheel,wheelReady,wheelPick,WSEG,chestReward,openChest,chestPend:()=>chestPend,checkSets,SETS,seed:seedOf};
 // ---------- démarrage ----------
 (async()=>{{const J=await (await fetch('niveaux.json',{cache:'no-cache'})).json();NMAIN=J.niveaux.length;DATA=[...J.niveaux,...(J.secrets||[]),null]}LV=DATA.map((d,i)=>d?lvInfo(d,i):null);LV[9].boss=1;let ls=null;try{ls=JSON.parse(localStorage.getItem(KEY)||'null')}catch(e){}const ix=await idbGet();const m=merge(ls,ix);if(m)S={...S,...m,v:2};S.stars=S.stars||{};S.vu=S.vu||{};if(S.vu.vir===undefined&&m&&m.vu&&m.vu.vir)S.vu.vir=1;
- S.unlocked=Math.min(S.unlocked,NMAIN);for(const k of['ecl','own','eq','res','buy','daily','gift','ach','sec','stat'])S[k]={...DEF[k],...(S[k]||{})};if(!Array.isArray(S.log))S.log=[];initV4();loadLevel(Math.min(S.unlocked,S.cur||1)-1);requestAnimationFrame(loop);window.__ready=true})();
+ S.unlocked=Math.min(S.unlocked,NMAIN);for(const k of['ecl','own','eq','res','buy','daily','gift','ach','sec','stat','chest','sets','wheel'])S[k]={...DEF[k],...(S[k]||{})};if(!Array.isArray(S.log))S.log=[];initV4();loadLevel(Math.min(S.unlocked,S.cur||1)-1);requestAnimationFrame(loop);window.__ready=true})();
 // ---------- mises à jour ----------
 if('serviceWorker' in navigator&&/^https?:$/.test(location.protocol)){navigator.serviceWorker.register('./sw.js',{updateViaCache:'none'}).then(reg=>{const chk=()=>reg.update().catch(()=>{});document.addEventListener('visibilitychange',()=>{if(!document.hidden)chk()});setInterval(chk,30*60e3)}).catch(()=>{});
  let had=!!navigator.serviceWorker.controller;navigator.serviceWorker.addEventListener('controllerchange',()=>{if(!had){had=true;return}saveNow();setTimeout(()=>location.reload(),150)})}
