@@ -2,7 +2,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
 <meta name="theme-color" content="#f6eee6"><link rel="manifest" href="manifest.json">
 <link rel="icon" href="icons/icon-192.png"><link rel="apple-touch-icon" href="icons/icon-192.png">
-<title>Filéclat</title>
+<title>Flèchemania</title>
 <style>
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 html,body{margin:0;height:100%;overflow:hidden;font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;color:#2a2e35;user-select:none;-webkit-user-select:none}
@@ -117,6 +117,13 @@ body.nuit #bJouer,body.nuit .grosbtn:not(.clair){background:#eceef2;color:#1d202
 .cof-c{position:absolute;left:10px;right:10px;top:12px;height:34px;border-radius:14px 14px 4px 4px;background:linear-gradient(#d39a3a,#a8741f);box-shadow:inset 0 0 0 4px #e9c46a;transform-origin:50% 100%;z-index:2;animation:cofS .3s ease-in-out 3}
 .cof-l{position:absolute;left:52px;top:38px;width:16px;height:18px;border-radius:4px;background:#ffe08a;z-index:3}#coffre.ouvert .cof-c{animation:none;transform:translateY(-24px) rotate(-28deg);transition:transform .35s cubic-bezier(.3,1.6,.5,1)}#coffre.ouvert .coffreG::after{content:"";position:absolute;left:50%;top:40%;width:160px;height:160px;transform:translate(-50%,-50%);background:radial-gradient(rgba(255,226,140,.9),rgba(255,226,140,0) 65%);animation:cofG .8s ease-out forwards}
 @keyframes cofS{25%{transform:rotate(-7deg)}75%{transform:rotate(7deg)}}@keyframes cofG{from{opacity:0;transform:translate(-50%,-50%) scale(.3)}to{opacity:1;transform:translate(-50%,-50%) scale(1)}}
+#carte{display:flex;flex-direction:column}#carteTop #solde{position:static;margin-left:auto}
+#tlW{position:relative;flex:1;min-height:0;display:flex}#tlW #tl{flex:1}
+.icol{position:absolute;top:8px;display:flex;flex-direction:column;gap:12px;z-index:2}.icol.g{left:8px}.icol.d{right:8px}
+#ibar{flex:none;height:calc(env(safe-area-inset-bottom) + 64px);display:flex;justify-content:center;align-items:center;gap:26px;padding-bottom:env(safe-area-inset-bottom)}
+.ico{position:relative;width:46px;height:46px;border-radius:50%;background:var(--glass);box-shadow:0 3px 12px rgba(0,0,0,.12),inset 0 0 0 1px rgba(255,255,255,.6);display:grid;place-items:center;font-size:21px;backdrop-filter:blur(6px)}
+.ico.dispo::after{content:"";position:absolute;top:-1px;right:-1px;width:12px;height:12px;border-radius:50%;background:#e0302a;box-shadow:0 0 0 2px #fff}
+#reg{z-index:12}#accueil h1{font-size:46px;margin:6px 0 34px}
 </style></head><body>
 <canvas id="c"></canvas>
 <header id="top">
@@ -142,10 +149,10 @@ body.nuit #bJouer,body.nuit .grosbtn:not(.clair){background:#eceef2;color:#1d202
  <div class="ligne"><label>Vibration<span class="sous" id="vibNote">Retour tactile quand une flèche bloque</span></label><button class="sw" id="swVib" role="switch" aria-checked="true"></button></div>
  <button class="grosbtn clair" id="bRestart">Recommencer le niveau</button>
  <button class="grosbtn" id="bFermer">Fermer</button>
- <div class="ver" id="ver">Filéclat v1</div>
+ <div class="ver" id="ver">Flèchemania v1</div>
 </div></div>
-<div class="ecran" id="accueil"><svg width="110" height="110" viewBox="0 0 110 110"><rect x="10" y="10" width="90" height="90" rx="16" fill="#fbf7ef" stroke="#e2d6c6" stroke-width="2"/><path d="M28 82V44h30v22h16" fill="none" stroke="#2a2e35" stroke-width="7" stroke-linejoin="round"/><path d="M86 66 72 56v20z" fill="#2a2e35"/><circle cx="78" cy="30" r="10" fill="#3a8f86"/></svg><div id="solde"><span class="ecl"></span><span id="soldeN">0</span></div><h1>Filéclat</h1><p id="accSub"></p><button id="bJouer">Jouer</button><div class="rang"><button id="bDefi">Défi du jour</button><button id="bCadeau">Cadeau du jour</button><button id="bPerso">Personnaliser</button><button id="bSucces">Succès</button><button id="bQuetes">Quêtes</button><button id="bRoue">Roue</button></div><div id="rang"><b id="rangN">Rang 0</b><div class="rbar"><i id="rangB"></i></div><small id="rangX"></small></div><div class="ver" id="ver2"></div></div>
-<div class="ecran" id="carte" hidden><div id="carteTop"><button class="ic" id="bCarteRet" aria-label="Retour"><svg viewBox="0 0 24 24" fill="none" stroke="#2a2e35" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg></button><h2>Niveaux</h2></div><div id="tl"><div id="tlIn"></div></div></div>
+<div class="ecran" id="accueil"><svg width="110" height="110" viewBox="0 0 110 110"><rect x="10" y="10" width="90" height="90" rx="16" fill="#fbf7ef" stroke="#e2d6c6" stroke-width="2"/><path d="M28 82V44h30v22h16" fill="none" stroke="#2a2e35" stroke-width="7" stroke-linejoin="round"/><path d="M86 66 72 56v20z" fill="#2a2e35"/><circle cx="78" cy="30" r="10" fill="#3a8f86"/></svg><h1>Flèchemania</h1><button id="bJouer">Jouer</button><div class="ver" id="ver2"></div></div>
+<div class="ecran" id="carte" hidden><div id="carteTop"><button class="ic" id="bCarteRet" aria-label="Retour"><svg viewBox="0 0 24 24" fill="none" stroke="#2a2e35" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg></button><h2>Niveaux</h2><div id="solde"><span class="ecl"></span><span id="soldeN">0</span></div></div><div id="tlW"><div id="tl"><div id="tlIn"></div></div><div class="icol g"><button class="ico" id="bPerso" aria-label="Boutique et personnaliser"><span>🛍️</span></button><button class="ico" id="bDefi" aria-label="Défi du jour"><span>📅</span></button><button class="ico" id="bQuetes" aria-label="Quêtes"><span>📜</span></button></div><div class="icol d"><button class="ico" id="bCadeau" aria-label="Cadeau du jour"><span>🎁</span></button><button class="ico" id="bRoue" aria-label="Roue de la chance"><span>🎡</span></button><button class="ico" id="bCoffres" aria-label="Coffres"><span>🧰</span></button></div></div><div id="ibar"><button class="ico" id="bSucces" aria-label="Succès"><span>🏅</span></button><button class="ico" id="bRang" aria-label="Rang"><span>⭐</span></button><button class="ico" id="bRegC" aria-label="Réglages"><span>⚙️</span></button></div></div><div class="voile" id="feuille" hidden style="z-index:9"><div class="carte"><div class="poignee"></div><h2 id="fT"></h2><div id="fC"></div><button class="grosbtn" id="bFF">Fermer</button></div></div><div style="display:none"><div id="rang"><b id="rangN">Rang 0</b><div class="rbar"><i id="rangB"></i></div><small id="rangX"></small></div></div>
 <div class="voile" id="win" hidden><div class="carte"><h2>Bravo !</h2><p id="winTxt"></p><div class="etoilesW" id="winEt"></div><p class="gain" id="winGain"></p><button class="grosbtn" id="bCoffre" hidden style="background:#b8862f">🎁 Ouvrir le coffre</button><button class="grosbtn" id="bSuite">Niveau suivant</button><button class="grosbtn clair" id="bCarte">Voir les niveaux</button></div></div>
 <div class="voile" id="echec" hidden><div class="carte" style="text-align:center;border-radius:26px;margin:0 16px auto;align-self:center"><h2>Plus de coups</h2><p style="color:var(--sub)">Il reste des flèches. Ta progression est gardée, essaie un autre ordre.</p><button class="grosbtn" id="bRecom">Recommencer</button><button class="grosbtn clair" id="bEchecCarte">Voir les niveaux</button></div></div>
 <div class="voile" id="conf" hidden style="z-index:10"><div class="carte" style="text-align:center;border-radius:26px;margin:0 16px auto;align-self:center"><h2 id="confT"></h2><p id="confP" style="color:var(--sub)"></p><button class="grosbtn" id="bConfOk">Acheter</button><button class="grosbtn clair" id="bConfNon">Annuler</button></div></div>
@@ -159,7 +166,7 @@ body.nuit #bJouer,body.nuit .grosbtn:not(.clair){background:#eceef2;color:#1d202
 <script type="importmap">{"imports":{"three":"./vendor/three.module.min.js"}}</script>
 <script type="module">
 import * as THREE from 'three';
-const VERSION='v5';window.__version=VERSION;
+const VERSION='v6';window.__version=VERSION;
 const $=id=>document.getElementById(id);
 // ---------- niveaux ----------
 let LV=[],DATA=null,NMAIN=15;// niveaux précalculés hors ligne par gen-niveaux.js -> niveaux.json
@@ -273,7 +280,7 @@ let rbMesh,rbSet=new Set(),rbN=0,rbGot=[],err=0,used=0,resUsed=0,lost=false,comb
 const matA=new THREE.MeshBasicMaterial({vertexColors:true,side:THREE.DoubleSide,polygonOffset:true,polygonOffsetFactor:-2,polygonOffsetUnits:-2});
 const matH=new THREE.MeshBasicMaterial({vertexColors:true,depthWrite:false,side:THREE.DoubleSide,polygonOffset:true,polygonOffsetFactor:-1,polygonOffsetUnits:-1,transparent:true});
 const matM=new THREE.MeshBasicMaterial({map:atlas,transparent:true,side:THREE.DoubleSide,polygonOffset:true,polygonOffsetFactor:-6,polygonOffsetUnits:-6,depthWrite:false});
-const OUT_T=.22,RED_T=.4,LIFT=.012,WID=.19,COL={base:new THREE.Color('#2a2e35'),ice1:new THREE.Color('#7fc0e0'),ice2:new THREE.Color('#3f8fc4'),hint:new THREE.Color('#e9a23b'),red:new THREE.Color('#e0302a')};
+const OUT_T=.22,RED_T=.4,LIFT=.012,WID=.19,COL={base:new THREE.Color('#2a2e35'),ice1:new THREE.Color('#7fc0e0'),ice2:new THREE.Color('#3f8fc4'),hint:new THREE.Color('#d4007a'),red:new THREE.Color('#e0302a')};
 function ctr(c,l=LIFT){const C=W.cells[c],n=N[C.n];return new THREE.Vector3(C.v[0]+.5+n[0]*(.5+l)-off,C.v[1]+.5+n[1]*(.5+l)-off,C.v[2]+.5+n[2]*(.5+l)-off)}
 const V3=i=>new THREE.Vector3(...N[i]);
 function poly(a,e){a.pl=a.pl||[];if(a.pl[e])return a.pl[e];const en=a.ends[e],bd=e?[...a.body].reverse():a.body,seq=[...bd,...en.path],jmp=new Set(en.jumps.map(j=>j+bd.length)),P=[],Nm=[];let headI=0;
@@ -322,7 +329,7 @@ function icone(m){const t={vir:14,cle:0,portail:10,glace:9,double:-1}[m];if(t<0)
  const c=document.createElement('canvas');c.width=c.height=T;const g=c.getContext('2d');g.translate(-(t%4)*T,-(t>>2)*T);drawTile(g,t);if(m=='cle'){g.setTransform(1,0,0,1,0,0)}
  return `<img src="${c.toDataURL()}" width="44" height="44" alt="">`}
 function fit(){const r=W.K*.5*Math.sqrt(3),asp=innerWidth/innerHeight,fv=cam.fov*Math.PI/360,fh=Math.atan(Math.tan(fv)*asp),d=r/Math.sin(Math.min(fv,fh))*.92;
- ctl.minDistance=d*.4;ctl.maxDistance=d*1.8;cam.position.set(.62,.5,.78).normalize().multiplyScalar(d);ctl.target.set(0,0,0);ctl.update();dirty=true}
+ fitD=d;ctl.minDistance=d*.4;ctl.maxDistance=d*1.8;cam.position.set(.62,.5,.78).normalize().multiplyScalar(d);ctl.target.set(0,0,0);ctl.update();dirty=true}
 function resize(){ren.setSize(innerWidth,innerHeight,false);cam.aspect=innerWidth/innerHeight;cam.updateProjectionMatrix();dirty=true}
 addEventListener('resize',resize);resize();
 function lvState(){S.lv[lvl+1]={sig:W.sig,rm:W.arrows.filter(a=>!alive[a.id]).map(a=>a.id),ice:[...ice],mv:moves,b:bon,u:undo,er:err,us:used,ru:resUsed,rg:rbGot,cg:comboGain,cam:[cam.position.toArray(),cam.up.toArray()]};saveNow()}
@@ -352,6 +359,10 @@ function stars(){return err==0?3:err<=2?2:1}
 function checkWin(){if(won||alive.some(x=>x))return;won=true;victoire()}
 // ---------- toucher ----------
 const rc=new THREE.Raycaster(),pt=new THREE.Vector2();let down=null,pointers=0;
+// règle du double-tap : deux taps à moins de 320 ms et 40 px, tous deux HORS d'une flèche. Sur une flèche, chaque tap reste un tap.
+let lastTap=null,fitD=30,dtapN=0;function hitCell(x,y){pt.set(x/innerWidth*2-1,-(y/innerHeight)*2+1);rc.setFromCamera(pt,cam);const h=rc.intersectObject(shapeMesh)[0];return h?quadCell[h.faceIndex]:-1}
+function dtap(x,y){const now=performance.now();if(lastTap&&now-lastTap.t<320&&Math.hypot(x-lastTap.x,y-lastTap.y)<40){lastTap=null;dtapN++;const c=hitCell(x,y);if(c>=0)faceCell(c,false,N[W.cells[c].n].map((v,i)=>v*2.2+ctr(c,0).toArray()[i]/W.K));else viewAll();snd.clic();return}lastTap={t:now,x,y}}
+function viewAll(){const from=cam.position.clone().normalize(),to=new THREE.Vector3(.62,.5,.78).normalize(),d0=cam.position.length(),t0=performance.now();ctl.vel=null;camAnim=t=>{const k=Math.min(1,(t-t0)/550),e=k<.5?2*k*k:1-Math.pow(-2*k+2,2)/2;const q=new THREE.Quaternion().slerp(new THREE.Quaternion().setFromUnitVectors(from,to),e);cam.position.copy(from.clone().applyQuaternion(q).multiplyScalar(d0+(fitD-d0)*e));ctl.orient();cam.updateMatrixWorld();dirty=true;if(k>=1){camAnim=null;if(!won)lvState()}}}
 function pick(x,y){pt.set(x/innerWidth*2-1,-(y/innerHeight)*2+1);rc.setFromCamera(pt,cam);const h=rc.intersectObject(shapeMesh)[0];if(!h)return null;const c=quadCell[h.faceIndex];let id=occ[c];
  if(id<0){let bd=1.15;for(const x of W.nbrs(c))if(occ[x]>=0){const dd=h.point.distanceTo(ctr(x,0));if(dd<bd){bd=dd;id=occ[x]}}}
  if(id<0)return null;const a=W.arrows[id];let e=0;if(a.dbl){const dh=h.point.distanceTo(ctr(a.body.at(-1),0)),dt=h.point.distanceTo(ctr(a.body[0],0));e=dt<dh?1:0}return{id,e}}
@@ -361,7 +372,7 @@ cv.addEventListener('pointermove',e=>{const P=ptrs.get(e.pointerId);if(!P)return
  if(pinch&&ptrs.size>=2){const [a,b]=[...ptrs.values()],d=Math.hypot(a.x-b.x,a.y-b.y);if(d>0&&pinch.d>0)ctl.zoomBy(pinch.d/d);pinch.d=d;return}
  if(!drag)return;if(!drag.on){if(Math.hypot(e.clientX-down.x,e.clientY-down.y)<=10)return;drag.on=true;down=null}// un tap court n'est jamais une rotation
  const dx=e.clientX-drag.x,dy=e.clientY-drag.y,now=performance.now(),dt=Math.max(8,now-drag.t);ctl.rot(dx,dy);const v=[dx*16/dt,dy*16/dt];ctl.vel=ctl.vel?[ctl.vel[0]*.4+v[0]*.6,ctl.vel[1]*.4+v[1]*.6]:v;drag.x=e.clientX;drag.y=e.clientY;drag.t=now});
-const up=e=>{if(drag&&drag.on)setTimeout(()=>{if(!won&&W)lvState()},700);ptrs.delete(e.pointerId);if(ptrs.size<2)pinch=null;if(drag&&drag.on&&performance.now()-drag.t>90)ctl.vel=null;if(!drag||!drag.on)ctl.vel=null;drag=null;pointers=ptrs.size;if(e.type=='pointerup'&&down&&performance.now()-down.t<600){const p=pick(e.clientX,e.clientY);if(p)tapArrow(p.id,p.e);else if(mode=='gomme')toast('Touche une flèche à effacer')}down=null;if(ctl.vel)ctl.vel=[...ctl.vel]};
+const up=e=>{const wasDrag=!!(drag&&drag.on);if(drag&&drag.on)setTimeout(()=>{if(!won&&W)lvState()},700);ptrs.delete(e.pointerId);if(ptrs.size<2)pinch=null;if(drag&&drag.on&&performance.now()-drag.t>90)ctl.vel=null;if(!drag||!drag.on)ctl.vel=null;drag=null;pointers=ptrs.size;if(e.type=='pointerup'&&down&&performance.now()-down.t<600){const p=pick(e.clientX,e.clientY);if(p){lastTap=null;tapArrow(p.id,p.e)}else{if(mode=='gomme')toast('Touche une flèche à effacer');if(!wasDrag)dtap(e.clientX,e.clientY);else lastTap=null}}down=null;if(ctl.vel)ctl.vel=[...ctl.vel]};
 cv.addEventListener('pointerup',up);cv.addEventListener('pointercancel',up);
 // ---------- interface ----------
 let tT;function toast(m){$('toast').textContent=m;$('toast').classList.add('on');clearTimeout(tT);tT=setTimeout(()=>$('toast').classList.remove('on'),1900)}
@@ -386,7 +397,7 @@ $('swVib').onclick=()=>{S.vib=!S.vib;regUI();saveNow();vib(30)};
 $('bRestart').onclick=()=>{delete S.lv[lvl+1];$('reg').hidden=true;loadLevel(lvl)};$('bRecom').onclick=()=>{snd.clic();delete S.lv[lvl+1];loadLevel(lvl)};$('bEchecCarte').onclick=()=>{$('echec').hidden=true;ouvrirCarte()};
 $('bSuite').onclick=()=>{$('win').hidden=true;if(kindOf(lvl)!='main'){ouvrirCarte();return}loadLevel(lvl+1<NMAIN?lvl+1:0)};
 $('bCarte').onclick=()=>{$('win').hidden=true;if(kindOf(lvl)=='main'&&lvl+1<NMAIN)S.cur=lvl+2;ouvrirCarte()};
-$('ver').textContent=$('ver2').textContent='Filéclat '+VERSION;
+$('ver').textContent=$('ver2').textContent='Flèchemania '+VERSION;
 // ---------- ligne du temps ----------
 const LOCK=window.__LOCK='<svg viewBox="0 0 24 24" fill="none" stroke="#a59d94" stroke-width="2.2" stroke-linecap="round"><rect x="5" y="11" width="14" height="10" rx="2.5" fill="#d7cfc6" stroke="none"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>';
 $('bJouer').onclick=()=>{ac();snd.clic();ouvrirCarte()};$('bNiv').onclick=()=>{snd.clic();ouvrirCarte()};$('bCarteRet').onclick=()=>{$('carte').hidden=true;$('accueil').hidden=true};
@@ -418,7 +429,7 @@ const avail=i=>bon[i]+Math.min(S.res[RK[i]]||0,RES_LV-resUsed);
 function useBonus(i){if(bon[i]>0){bon[i]--;return true}if(resUsed<RES_LV&&S.res[RK[i]]>0){S.res[RK[i]]--;resUsed++;return true}return false}
 // ---- limite de coups ----
 const limit=()=>LV[lvl]&&LV[lvl].lim!=null&&!S.zen?W.arrows.length+LV[lvl].lim:null;
-function uiLimite(){const L=limit(),e=$('limite');if(L==null){e.className='';e.textContent='';return}const r=Math.max(0,L-used),was=e.dataset.r;e.textContent='Coups restants : '+r;e.className='on'+(r<=1?' rouge':r<=3?' orange':'');if(was!=null&&was!=r){void e.offsetWidth;e.classList.add('pulse')}e.dataset.r=r}
+function uiLimite(){const L=limit(),e=$('limite');$('moves').style.display=L==null?'':'none';if(L==null){e.className='';e.textContent='';return}const r=Math.max(0,L-used),was=e.dataset.r;e.textContent='Coups restants : '+r;e.className='on'+(r<=1?' rouge':r<=3?' orange':'');if(was!=null&&was!=r){void e.offsetWidth;e.classList.add('pulse')}e.dataset.r=r}
 function checkLimit(){const L=limit();if(L==null||won||lost)return;if(used>=L&&alive.some(x=>x)){lost=true;setTimeout(()=>{if(won)return;$('echec').hidden=false;snd.bloque()},350)}}
 // ---- combo ----
 let comboT;function showCombo(n){const e=$('combo');e.textContent='Combo ×'+n;e.classList.add('on');clearTimeout(comboT);comboT=setTimeout(()=>e.classList.remove('on'),700)}
@@ -438,7 +449,8 @@ function rainbowReward(id){const r=RB_REW[hstr(W.sig+id)%3];if(r[0]=='e')gain(5)
 // ---- particules (pool fixe, aucune allocation par image) ----
 const PN=900,pPos=new Float32Array(PN*3),pCol=new Float32Array(PN*3),pVel=new Float32Array(PN*3),pLife=new Float32Array(PN),pG=new Float32Array(PN);let pHead=0,pAlive=0;
 const pGeo=new THREE.BufferGeometry();pGeo.setAttribute('position',new THREE.BufferAttribute(pPos,3).setUsage(THREE.DynamicDrawUsage));pGeo.setAttribute('color',new THREE.BufferAttribute(pCol,3).setUsage(THREE.DynamicDrawUsage));
-const pMat=new THREE.PointsMaterial({size:.32,vertexColors:true,transparent:true,depthWrite:false,blending:THREE.NormalBlending,sizeAttenuation:true});const pts=new THREE.Points(pGeo,pMat);pts.frustumCulled=false;pts.renderOrder=5;scene.add(pts);
+const pTex=mkTex((g,s)=>{const r=g.createRadialGradient(s/2,s/2,0,s/2,s/2,s/2);r.addColorStop(0,'rgba(255,255,255,1)');r.addColorStop(.28,'rgba(255,255,255,.95)');r.addColorStop(.42,'rgba(255,255,255,.35)');r.addColorStop(1,'rgba(255,255,255,0)');g.fillStyle=r;g.fillRect(0,0,s,s)},64);pTex.colorSpace=THREE.NoColorSpace;
+const pMat=new THREE.PointsMaterial({map:pTex,alphaTest:.01,size:.46,vertexColors:true,transparent:true,depthWrite:false,blending:THREE.NormalBlending,sizeAttenuation:true});const pts=new THREE.Points(pGeo,pMat);pts.frustumCulled=false;pts.renderOrder=5;scene.add(pts);
 for(let i=0;i<PN;i++)pPos[i*3+1]=1e5;
 const _c=new THREE.Color();
 const PSTY={poussiere:{c:()=>_c.set('#b9ad9e'),sp:2.2,g:-1,l:.55},confettis:{c:()=>_c.setHSL(Math.random(),.8,.58),sp:4.5,g:-6,l:.9},etoiles:{c:()=>_c.setHSL(.13,.95,.62+Math.random()*.2),sp:3.2,g:-1.5,l:.8},bulles:{c:()=>_c.setHSL(.55,.7,.75),sp:1.6,g:2.2,l:1},
@@ -509,7 +521,7 @@ const PALS={foret:{bg:'linear-gradient(168deg,#eef5e6 0%,#e2eedb 45%,#cfe2cf 100
  lavande:{bg:'linear-gradient(168deg,#f3effc 0%,#e3dbf6 60%,#d4c8f0 100%)',c:['#faf8ff','#e6def6'],a:'#2e2156',d:{bg:'linear-gradient(168deg,#1a1529 0%,#251d3c 100%)',c:['#3c3359','#32294c'],a:'#f3eeff'}},
  ardoise:{bg:'linear-gradient(168deg,#e9ecef 0%,#d7dce1 60%,#c6cdd4 100%)',c:['#f5f7f9','#dde2e7'],a:'#1d2733',d:{bg:'linear-gradient(168deg,#15191e 0%,#1d232a 100%)',c:['#353d47','#2c333c'],a:'#f0f4f8'}},
  aurore:{bg:'linear-gradient(168deg,#ffe9f0 0%,#e9e2ff 50%,#d6f3ef 100%)',c:['#fffafc','#efe6f6'],a:'#3b1f4f',d:{bg:'linear-gradient(168deg,#1c1426 0%,#1a2333 60%,#14302e 100%)',c:['#3f3552','#33304a'],a:'#fdf0ff'}}};
-const LOOK={c0:new THREE.Color(),c1:new THREE.Color(),pal:null,dark:false};
+const HINT_L='#d4007a',HINT_D='#ff5cc8';const LOOK={c0:new THREE.Color(),c1:new THREE.Color(),pal:null,dark:false};
 const mqDark=matchMedia('(prefers-color-scheme: dark)');mqDark.addEventListener?.('change',()=>{if(S.nuit=='auto')applyLook()});
 function isDark(){return S.nuit=='sombre'||(S.nuit=='auto'&&mqDark.matches)}
 function palFor(i){if(S.eq.theme&&S.eq.theme!='zone')return S.eq.theme;if(i!=null&&kindOf(i)=='secret')return'secret';return ZONES[zoneOf(i??0)].id}
@@ -519,14 +531,14 @@ function drawCase(tex,c0,c1){const g=texCv.getContext('2d'),s=128,R=rng(77);g.cl
  else if(tex=='bois'){g.globalAlpha=.16;g.strokeStyle='#6b4524';for(let y=4;y<s;y+=7){g.lineWidth=1+R()*2;g.beginPath();for(let x=0;x<=s;x+=8)g.lineTo(x,y+Math.sin(x/19+y)*2.2);g.stroke()}g.globalAlpha=1}
  else if(tex=='marbre'){g.globalAlpha=.22;g.strokeStyle='#7d8590';for(let k=0;k<5;k++){g.lineWidth=.6+R()*1.6;g.beginPath();let x=R()*s,y=0;g.moveTo(x,y);while(y<s){x+=(R()-.5)*22;y+=8+R()*10;g.lineTo(x,y)}g.stroke()}g.globalAlpha=1}
  else if(tex=='verre'){g.fillStyle='rgba(255,255,255,.35)';g.fillRect(0,0,s,s);for(let i=0;i<500;i++){g.fillStyle=`rgba(255,255,255,${R()*.18})`;g.fillRect(R()*s,R()*s,2,2)}const l=g.createLinearGradient(0,0,s,s);l.addColorStop(0,'rgba(255,255,255,.35)');l.addColorStop(.5,'rgba(255,255,255,0)');g.fillStyle=l;g.fillRect(0,0,s,s)}
- else if(tex=='neon'){g.fillStyle='#16132b';g.fillRect(0,0,s,s);g.shadowColor='#3ff0ff';g.shadowBlur=10;g.strokeStyle='#3ff0ff';g.lineWidth=3;g.strokeRect(6,6,s-12,s-12);g.shadowBlur=0}
+ else if(tex=='neon'){g.fillStyle='#16132b';g.fillRect(0,0,s,s);g.shadowColor='#7cff6b';g.shadowBlur=10;g.strokeStyle='#7cff6b';g.lineWidth=3;g.strokeRect(6,6,s-12,s-12);g.shadowBlur=0}
  g.strokeStyle='rgba(120,100,80,.16)';g.lineWidth=2;if(tex!='neon')g.strokeRect(1,1,s-2,s-2)}
 function lum(h){const c=new THREE.Color(h);const f=v=>v<=.03928?v/12.92:Math.pow((v+.055)/1.055,2.4);const lin=new THREE.Color(h);return .2126*lin.r+.7152*lin.g+.0722*lin.b}// THREE.Color est déjà linéaire
 const contrast=(a,b)=>{const x=lum(a),y=lum(b);return(Math.max(x,y)+.05)/(Math.min(x,y)+.05)};
 function applyLook(){const id=palFor(lvl),P=PALS[id],dk=isDark(),V=dk?P.d:P,neon=S.eq.tex=='neon';LOOK.pal=id;LOOK.dark=dk||!!P.dk;
  document.body.style.setProperty('--bg',V.bg);document.body.classList.toggle('nuit',LOOK.dark);document.querySelector('meta[name=theme-color]').content=dk?'#1b1d22':'#f6eee6';
  const c0=neon?'#1d1838':V.c[0],c1=neon?'#16132b':V.c[1],ar=neon?'#f2fdff':V.a;drawCase(S.eq.tex,c0,c1);
- if(!texCase.image||texCase.image!==texCv){texCase.image=texCv}texCase.needsUpdate=true;LOOK.c0.set(c0);LOOK.c1.set(c1);LOOK.arrow=ar;LOOK.case=c1;COL.base.set(ar);S.dark=LOOK.dark;
+ if(!texCase.image||texCase.image!==texCv){texCase.image=texCv}texCase.needsUpdate=true;LOOK.c0.set(c0);LOOK.c1.set(c1);LOOK.arrow=ar;LOOK.case=c1;COL.base.set(ar);S.dark=LOOK.dark;{const lu=c=>{const v=new THREE.Color(c);return .2126*v.r+.7152*v.g+.0722*v.b};COL.hint.set((lu(c0)+lu(c1))/2<.35||neon?HINT_D:HINT_L)}
  if(W&&arrowMesh)rebuild();dirty=true}
 // ---- musique d'ambiance (WebAudio génératif) ----
 let mus=null;const SCALE=[0,2,4,7,9];
@@ -548,10 +560,10 @@ snd.eclat=()=>{if(!ac()||S.mute)return;const t=AC.currentTime,n=noise(),f=AC.cre
 // ---- FPS ----
 let fpsF=[];function fpsTick(t){fpsF.push(t);if(fpsF.length>240)fpsF.shift()}
 // ---- ligne du temps : zones, badges, secrets ----
-function ouvrirCarte(){const box=$('tl'),inn=$('tlIn'),w=box.clientWidth||innerWidth,gap=124,head=96,pad=Math.max(220,(box.clientHeight||700)/2),cur=Math.min(S.cur||1,S.unlocked),nz=Math.ceil(NMAIN/10);
+let ouvrirCarte=function(){const box=$('tl'),inn=$('tlIn'),w=box.clientWidth||innerWidth,gap=124,head=96,pad=Math.max(220,(box.clientHeight||700)/2),cur=Math.min(S.cur||1,S.unlocked),nz=Math.ceil(NMAIN/10);
  const Y=[];let y=pad;const tops=[];for(let i=0;i<NMAIN;i++){if(i%10==0){tops.push(y);y+=head}Y.push(y);y+=gap}tops.push(y);const H=y+pad;inn.style.height=H+'px';
  // l'ordre est de bas en haut : on inverse
- const yy=v=>H-v;const pts=Y.map((v,i)=>({x:w/2+Math.sin(i*.95)*w*.26,y:yy(v)}));
+ const yy=v=>H-v;const SIDE=8+46+10,HALF=46,amp=Math.max(0,Math.min(w*.26,w/2-SIDE-HALF));const pts=Y.map((v,i)=>({x:w/2+Math.sin(i*.95)*amp,y:yy(v)}));
  let h='';for(let z=0;z<nz;z++){const P=PALS[ZONES[z].id],V=isDark()?P.d:P;h+=`<div class="zone-b" style="top:${yy(tops[z+1])}px;height:${tops[z+1]-tops[z]}px;background:${V.bg};opacity:.9"></div><div class="zone-t" style="top:${yy(tops[z])-30}px">Zone ${z+1} · ${ZONES[z].nom}</div>`}
  let d=`M${pts[0].x},${pts[0].y+pad}L${pts[0].x},${pts[0].y}`;for(let i=1;i<pts.length;i++){const a=pts[i-1],b=pts[i],m=(a.y+b.y)/2;d+=`C${a.x},${m} ${b.x},${m} ${b.x},${b.y}`}
  const done=Math.max(0,S.unlocked-1);let dd=`M${pts[0].x},${pts[0].y}`;for(let i=1;i<=Math.min(done,pts.length-1);i++){const a=pts[i-1],b=pts[i],m=(a.y+b.y)/2;dd+=`C${a.x},${m} ${b.x},${m} ${b.x},${b.y}`}
@@ -559,7 +571,7 @@ function ouvrirCarte(){const box=$('tl'),inn=$('tlIn'),w=box.clientWidth||innerW
  const et=n=>{const st=S.stars[n]||(S.done[n]!=null?1:0);return st?`<span class="etoiles">${'★'.repeat(st)}<i>${'★'.repeat(3-st)}</i></span>`:''};
  for(let i=0;i<NMAIN;i++){const n=i+1,p=pts[i],lk=n>S.unlocked,isCur=n==cur,L=LV[i];const bd=L.boss?'<span class="badge boss">Patron</span>':L.geant?'<span class="badge geant">Géant</span>':L.lim!=null?'<span class="badge lim">Coups limités</span>':'';
   h+=`<button class="pt${lk?' lock':''}${S.done[n]!=null&&!isCur?' fait':''}${isCur?' cur':''}" data-n="${n}" style="left:${p.x}px;top:${p.y}px" ${lk?'disabled aria-label="Niveau '+n+' verrouillé"':'aria-label="Niveau '+n+'"'}>${lk?LOCK:n}${lk?'':et(n)}${bd}</button>`;
-  if(n%10==0){const z=n/10-1,si=secretIdx(z);if(si>=0){const op=secretOpen(z),sx=p.x<w/2?Math.min(w-44,p.x+w*.36):Math.max(44,p.x-w*.36),fini=S.sec[z+1];
+  if(n%10==0){const z=n/10-1,si=secretIdx(z);if(si>=0){const op=secretOpen(z),sx=p.x<w/2?Math.min(w-SIDE-34,p.x+96):Math.max(SIDE+34,p.x-96),fini=S.sec[z+1];
    h+=`<button class="pt secret${op?'':' lock'}${fini?' fait':''}" data-s="${si}" style="left:${sx}px;top:${p.y-40}px" ${op?'aria-label="Secret '+(z+1)+'"':'disabled aria-label="Secret verrouillé : 3 étoiles partout dans la zone"'}>${op?'✦':'?'}${op?et(si+1):''}<span class="badge" style="background:#6a4bb5">Secret</span></button>`}}}
  inn.innerHTML=h;inn.querySelectorAll('.pt:not(.lock)').forEach(b=>b.onclick=()=>{snd.clic();$('carte').hidden=true;$('accueil').hidden=true;loadLevel(b.dataset.s!=null?+b.dataset.s:+b.dataset.n-1)});
  $('carte').hidden=false;const target=pts[cur-1].y-box.clientHeight/2;box.scrollTop=Math.max(0,target)}
@@ -606,7 +618,7 @@ function initV4(){applyLook();accUI();
  $('swZen').onclick=()=>{S.zen=!S.zen;regUI();saveNow();snd.clic();ui()};
  document.querySelectorAll('#segNuit button').forEach(b=>b.onclick=()=>{S.nuit=b.dataset.v;saveNow();applyLook();regUI();snd.clic()});
  const r0=regUI;regUI=function(){r0();$('mvol').value=S.mvol;$('swMMute').setAttribute('aria-checked',S.mmute);$('swZen').setAttribute('aria-checked',S.zen);document.querySelectorAll('#segNuit button').forEach(b=>b.classList.toggle('on',b.dataset.v==S.nuit))};
- initV5();const oj=$('bJouer').onclick;$('bJouer').onclick=()=>{oj();};const ret=$('bCarteRet').onclick;$('bCarteRet').onclick=()=>{ret();applyLook()};checkUnlocks()}
+ initV5();initV6();const oj=$('bJouer').onclick;$('bJouer').onclick=()=>{oj();};const ret=$('bCarteRet').onclick;$('bCarteRet').onclick=()=>{ret();applyLook()};checkUnlocks()}
 window.__v4={get S(){return S},bal,gain,claimGift,giftReady,ouvrirDefi,makeDaily,dayStr,avail:i=>avail(i),useBonus,res:()=>({...S.res}),resUsed:()=>resUsed,limit,used:()=>used,err:()=>err,lost:()=>lost,won:()=>won,combo:()=>combo,
  rb:()=>[...rbSet],rbGot:()=>[...rbGot],applyLook,look:()=>({pal:LOOK.pal,dark:LOOK.dark,arrow:LOOK.arrow,case:LOOK.case,bg:getComputedStyle(document.body).getPropertyValue('--bg')}),contrast,PALS,
  burst:()=>({on:burst.on,n:burst.n,kind:burst.kind,vis:bMesh.visible}),particles:()=>{let n=0;for(let i=0;i<PN;i++)if(pLife[i]>0)n++;return n},fps:()=>{const f=fpsF;if(f.length<10)return 0;return(f.length-1)*1000/(f.at(-1)-f[0])},fpsReset:()=>{fpsF=[]},
@@ -661,6 +673,20 @@ function initV5(){quests();rangUI();
  $('bCoffre').onclick=()=>{openChest()};$('bCofOk').onclick=()=>{$('coffre').hidden=true};
  const a0=accUI;accUI=function(){a0();$('bRoue').classList.toggle('dispo',wheelReady());$('bQuetes').classList.toggle('dispo',quests().some(q=>q.prog>=q.goal&&!q.claimed))};accUI()}
 window.__v5={get S(){return S},rankOf,th,xpGain,quests,qProg,claimQuest,weekKey,spinWheel,wheelReady,wheelPick,WSEG,chestReward,openChest,chestPend:()=>chestPend,checkSets,SETS,seed:seedOf};
+
+// =================== v6 : icônes de la ligne du temps ===================
+function feuille(t,h){$('fT').textContent=t;$('fC').innerHTML=h;$('feuille').hidden=false}
+function coffresUI(){const ok=Object.keys(S.chest).length,next=Math.ceil((S.unlocked)/5)*5;let h=`<p style="color:var(--sub)">Un coffre tous les 5 niveaux. Ouverts : <b>${ok}</b>.</p>`;
+ for(let n=5;n<=NMAIN;n+=5){const c=S.chest[n],dn=S.done[n]!=null;h+=`<div class="item${c||dn?'':' verr'}"><div class="ap" style="display:grid;place-items:center;font-size:26px;background:${c?'#3a8f86':dn?'#e9a23b':'#e2d9cf'}">${c?'✓':'🧰'}</div><div class="tx"><b>Coffre du niveau ${n}</b><small>${c?'Ouvert':dn?'Prêt à ouvrir':'Termine le niveau '+n}</small></div>${!c&&dn?`<button data-c="${n}">Ouvrir</button>`:''}</div>`}
+ feuille('Coffres',h);$('fC').querySelectorAll('button[data-c]').forEach(b=>b.onclick=()=>{chestPend=+b.dataset.c;$('feuille').hidden=true;openChest();accUI()})}
+function rangSheet(){rangUI();feuille('Rang',`<div style="text-align:center">${$('rang').innerHTML}</div><p style="color:var(--sub);font-size:13.5px">XP : niveaux, étoiles, défi et quêtes. Récompense à chaque rang, une baguette tous les 5 rangs.</p>`)}
+function initV6(){$('bDefi').innerHTML='<span>📅</span>';$('bCadeau').innerHTML='<span>🎁</span>';$('bFF').onclick=()=>{$('feuille').hidden=true};$('feuille').onclick=e=>{if(e.target.id=='feuille')$('feuille').hidden=true};
+ $('bCoffres').onclick=()=>{snd.clic();coffresUI()};$('bRang').onclick=()=>{snd.clic();rangSheet()};$('bRegC').onclick=()=>{snd.clic();regUI();$('reg').hidden=false};
+ $('bCadeau').onclick=()=>{ac();claimGift();accUI()};
+ accUI=function(){soldeUI();const D=S.daily,dot=(id,v)=>$(id).classList.toggle('dispo',!!v);dot('bDefi',D.last!=dayStr());dot('bCadeau',giftReady());dot('bRoue',wheelReady());dot('bQuetes',quests().some(q=>q.prog>=q.goal&&!q.claimed));
+  dot('bCoffres',Array.from({length:Math.floor(NMAIN/5)},(_,i)=>(i+1)*5).some(n=>S.done[n]!=null&&!S.chest[n]));dot('bRang',false);$('bDefi').setAttribute('aria-label','Défi du jour'+(D.streak?` – série ${D.streak}`:''))};accUI();
+ const oc=ouvrirCarte;ouvrirCarte=function(){oc();accUI()}}
+window.__v6={cellNormal:c=>N[W.cells[c].n],pickAt:(x,y)=>pick(x,y),pMap:()=>!!pMat.map,dtapN:()=>dtapN,viewAll,lastTap:()=>lastTap,hitCell,fitD:()=>fitD,coffresUI,feuille,hintCol:()=>'#'+COL.hint.getHexString()};
 // ---------- démarrage ----------
 (async()=>{{const J=await (await fetch('niveaux.json',{cache:'no-cache'})).json();NMAIN=J.niveaux.length;DATA=[...J.niveaux,...(J.secrets||[]),null]}LV=DATA.map((d,i)=>d?lvInfo(d,i):null);LV[9].boss=1;let ls=null;try{ls=JSON.parse(localStorage.getItem(KEY)||'null')}catch(e){}const ix=await idbGet();const m=merge(ls,ix);if(m)S={...S,...m,v:2};S.stars=S.stars||{};S.vu=S.vu||{};if(S.vu.vir===undefined&&m&&m.vu&&m.vu.vir)S.vu.vir=1;
  S.unlocked=Math.min(S.unlocked,NMAIN);for(const k of['ecl','own','eq','res','buy','daily','gift','ach','sec','stat','chest','sets','wheel'])S[k]={...DEF[k],...(S[k]||{})};if(!Array.isArray(S.log))S.log=[];initV4();loadLevel(Math.min(S.unlocked,S.cur||1)-1);requestAnimationFrame(loop);window.__ready=true})();
