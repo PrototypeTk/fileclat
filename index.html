@@ -54,7 +54,7 @@ input[type=range]{width:55%;accent-color:#2a2e35}
 .ecran[hidden],#carte[hidden],#accueil[hidden]{display:none}
 #accueil{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;text-align:center}
 #accueil h1{font-size:44px;margin:8px 0 0;letter-spacing:.5px}#accueil p{margin:0 0 26px;color:#7a808a}
-#bJouer{padding:17px 64px;border-radius:22px;background:#2a2e35;color:#fff;font-size:20px;font-weight:750;box-shadow:0 10px 26px rgba(42,46,53,.25)}
+#bReprendre{margin-top:12px;padding:12px 34px;border-radius:18px;background:transparent;color:inherit;border:2px solid currentColor;font-size:16px;font-weight:700}#bReprendre[hidden]{display:none}#bJouer{padding:17px 64px;border-radius:22px;background:#2a2e35;color:#fff;font-size:20px;font-weight:750;box-shadow:0 10px 26px rgba(42,46,53,.25)}
 #accueil .ver{position:absolute;bottom:calc(env(safe-area-inset-bottom) + 18px);left:0;right:0}
 #carte{display:flex;flex-direction:column}
 #carteTop{display:flex;align-items:center;gap:12px;padding:calc(env(safe-area-inset-top) + 12px) 14px 8px}
@@ -151,7 +151,7 @@ body.nuit #bJouer,body.nuit .grosbtn:not(.clair){background:#eceef2;color:#1d202
  <button class="grosbtn" id="bFermer">Fermer</button>
  <div class="ver" id="ver">Flèchemania v1</div>
 </div></div>
-<div class="ecran" id="accueil"><svg width="110" height="110" viewBox="0 0 110 110"><rect x="10" y="10" width="90" height="90" rx="16" fill="#fbf7ef" stroke="#e2d6c6" stroke-width="2"/><path d="M28 82V44h30v22h16" fill="none" stroke="#2a2e35" stroke-width="7" stroke-linejoin="round"/><path d="M86 66 72 56v20z" fill="#2a2e35"/><circle cx="78" cy="30" r="10" fill="#3a8f86"/></svg><h1>Flèchemania</h1><button id="bJouer">Jouer</button><div class="ver" id="ver2"></div></div>
+<div class="ecran" id="accueil"><svg width="110" height="110" viewBox="0 0 110 110"><rect x="10" y="10" width="90" height="90" rx="16" fill="#fbf7ef" stroke="#e2d6c6" stroke-width="2"/><path d="M28 82V44h30v22h16" fill="none" stroke="#2a2e35" stroke-width="7" stroke-linejoin="round"/><path d="M86 66 72 56v20z" fill="#2a2e35"/><circle cx="78" cy="30" r="10" fill="#3a8f86"/></svg><h1>Flèchemania</h1><button id="bJouer">Jouer</button><button id="bReprendre" hidden></button><div class="ver" id="ver2"></div></div>
 <div class="ecran" id="carte" hidden><div id="carteTop"><button class="ic" id="bCarteRet" aria-label="Retour"><svg viewBox="0 0 24 24" fill="none" stroke="#2a2e35" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg></button><h2>Niveaux</h2><div id="solde"><span class="ecl"></span><span id="soldeN">0</span></div></div><div id="tlW"><div id="tl"><div id="tlIn"></div></div><div class="icol g"><button class="ico" id="bPerso" aria-label="Boutique et personnaliser"><span>🛍️</span></button><button class="ico" id="bDefi" aria-label="Défi du jour"><span>📅</span></button><button class="ico" id="bQuetes" aria-label="Quêtes"><span>📜</span></button></div><div class="icol d"><button class="ico" id="bCadeau" aria-label="Cadeau du jour"><span>🎁</span></button><button class="ico" id="bRoue" aria-label="Roue de la chance"><span>🎡</span></button><button class="ico" id="bCoffres" aria-label="Coffres"><span>🧰</span></button></div></div><div id="ibar"><button class="ico" id="bSucces" aria-label="Succès"><span>🏅</span></button><button class="ico" id="bRang" aria-label="Rang"><span>⭐</span></button><button class="ico" id="bRegC" aria-label="Réglages"><span>⚙️</span></button></div></div><div class="voile" id="feuille" hidden style="z-index:9"><div class="carte"><div class="poignee"></div><h2 id="fT"></h2><div id="fC"></div><button class="grosbtn" id="bFF">Fermer</button></div></div><div style="display:none"><div id="rang"><b id="rangN">Rang 0</b><div class="rbar"><i id="rangB"></i></div><small id="rangX"></small></div></div>
 <div class="voile" id="win" hidden><div class="carte"><h2>Bravo !</h2><p id="winTxt"></p><div class="etoilesW" id="winEt"></div><p class="gain" id="winGain"></p><button class="grosbtn" id="bCoffre" hidden style="background:#b8862f">🎁 Ouvrir le coffre</button><button class="grosbtn" id="bSuite">Niveau suivant</button><button class="grosbtn clair" id="bCarte">Voir les niveaux</button></div></div>
 <div class="voile" id="echec" hidden><div class="carte" style="text-align:center;border-radius:26px;margin:0 16px auto;align-self:center"><h2>Plus de coups</h2><p style="color:var(--sub)">Il reste des flèches. Ta progression est gardée, essaie un autre ordre.</p><button class="grosbtn" id="bRecom">Recommencer</button><button class="grosbtn clair" id="bEchecCarte">Voir les niveaux</button></div></div>
@@ -166,7 +166,7 @@ body.nuit #bJouer,body.nuit .grosbtn:not(.clair){background:#eceef2;color:#1d202
 <script type="importmap">{"imports":{"three":"./vendor/three.module.min.js"}}</script>
 <script type="module">
 import * as THREE from 'three';
-const VERSION='v6';window.__version=VERSION;
+const VERSION='v7';window.__version=VERSION;
 const $=id=>document.getElementById(id);
 // ---------- niveaux ----------
 let LV=[],DATA=null,NMAIN=15;// niveaux précalculés hors ligne par gen-niveaux.js -> niveaux.json
@@ -332,7 +332,7 @@ function fit(){const r=W.K*.5*Math.sqrt(3),asp=innerWidth/innerHeight,fv=cam.fov
  fitD=d;ctl.minDistance=d*.4;ctl.maxDistance=d*1.8;cam.position.set(.62,.5,.78).normalize().multiplyScalar(d);ctl.target.set(0,0,0);ctl.update();dirty=true}
 function resize(){ren.setSize(innerWidth,innerHeight,false);cam.aspect=innerWidth/innerHeight;cam.updateProjectionMatrix();dirty=true}
 addEventListener('resize',resize);resize();
-function lvState(){S.lv[lvl+1]={sig:W.sig,rm:W.arrows.filter(a=>!alive[a.id]).map(a=>a.id),ice:[...ice],mv:moves,b:bon,u:undo,er:err,us:used,ru:resUsed,rg:rbGot,cg:comboGain,cam:[cam.position.toArray(),cam.up.toArray()]};saveNow()}
+function lvState(){S.lv[lvl+1]={sig:W.sig,rm:W.arrows.filter(a=>!alive[a.id]).map(a=>a.id),ice:[...ice],mv:moves,b:bon,u:undo,er:err,us:used,ru:resUsed,rg:rbGot,cg:comboGain,cam:[cam.position.toArray(),cam.up.toArray()]};if(lvl<NMAIN)S.last=lvl+1;saveNow()}
 // ---------- logique ----------
 function blocker(a,e){for(const c of a.ends[e].path){const o=occ[c];if(o>=0&&o!==a.id)return o}return -1}
 const locked=a=>a.lock>=0&&alive[a.lock];
@@ -618,7 +618,7 @@ function initV4(){applyLook();accUI();
  $('swZen').onclick=()=>{S.zen=!S.zen;regUI();saveNow();snd.clic();ui()};
  document.querySelectorAll('#segNuit button').forEach(b=>b.onclick=()=>{S.nuit=b.dataset.v;saveNow();applyLook();regUI();snd.clic()});
  const r0=regUI;regUI=function(){r0();$('mvol').value=S.mvol;$('swMMute').setAttribute('aria-checked',S.mmute);$('swZen').setAttribute('aria-checked',S.zen);document.querySelectorAll('#segNuit button').forEach(b=>b.classList.toggle('on',b.dataset.v==S.nuit))};
- initV5();initV6();const oj=$('bJouer').onclick;$('bJouer').onclick=()=>{oj();};const ret=$('bCarteRet').onclick;$('bCarteRet').onclick=()=>{ret();applyLook()};checkUnlocks()}
+ initV5();initV6();initV7();const oj=$('bJouer').onclick;$('bJouer').onclick=()=>{oj();};const ret=$('bCarteRet').onclick;$('bCarteRet').onclick=()=>{ret();applyLook()};checkUnlocks()}
 window.__v4={get S(){return S},bal,gain,claimGift,giftReady,ouvrirDefi,makeDaily,dayStr,avail:i=>avail(i),useBonus,res:()=>({...S.res}),resUsed:()=>resUsed,limit,used:()=>used,err:()=>err,lost:()=>lost,won:()=>won,combo:()=>combo,
  rb:()=>[...rbSet],rbGot:()=>[...rbGot],applyLook,look:()=>({pal:LOOK.pal,dark:LOOK.dark,arrow:LOOK.arrow,case:LOOK.case,bg:getComputedStyle(document.body).getPropertyValue('--bg')}),contrast,PALS,
  burst:()=>({on:burst.on,n:burst.n,kind:burst.kind,vis:bMesh.visible}),particles:()=>{let n=0;for(let i=0;i<PN;i++)if(pLife[i]>0)n++;return n},fps:()=>{const f=fpsF;if(f.length<10)return 0;return(f.length-1)*1000/(f.at(-1)-f[0])},fpsReset:()=>{fpsF=[]},
@@ -687,6 +687,12 @@ function initV6(){$('bDefi').innerHTML='<span>📅</span>';$('bCadeau').innerHTM
   dot('bCoffres',Array.from({length:Math.floor(NMAIN/5)},(_,i)=>(i+1)*5).some(n=>S.done[n]!=null&&!S.chest[n]));dot('bRang',false);$('bDefi').setAttribute('aria-label','Défi du jour'+(D.streak?` – série ${D.streak}`:''))};accUI();
  const oc=ouvrirCarte;ouvrirCarte=function(){oc();accUI()}}
 window.__v6={cellNormal:c=>N[W.cells[c].n],pickAt:(x,y)=>pick(x,y),pMap:()=>!!pMat.map,dtapN:()=>dtapN,viewAll,lastTap:()=>lastTap,hitCell,fitD:()=>fitD,coffresUI,feuille,hintCol:()=>'#'+COL.hint.getHexString()};
+// ---------- v7 : Reprendre ----------
+const sigC={};function sigOf(n){if(!(n in sigC)){try{sigC[n]=gen(n-1).sig}catch(e){sigC[n]=null}}return sigC[n]}
+function enCours(){const n=S.last||S.cur,st=S.lv&&S.lv[n];return n>=1&&n<=NMAIN&&n<=S.unlocked&&st&&!st.fini&&st.sig&&((st.rm&&st.rm.length)||st.mv)&&st.sig===sigOf(n)?n:0}
+function majReprendre(){const n=enCours(),b=$('bReprendre');b.hidden=!n;if(n)b.textContent='Reprendre · niveau '+n}
+function initV7(){$('bReprendre').onclick=()=>{const n=enCours();if(!n){majReprendre();return}ac();snd.clic();$('accueil').hidden=true;$('carte').hidden=true;loadLevel(n-1)};
+ new MutationObserver(()=>{if(!$('accueil').hidden)majReprendre()}).observe($('accueil'),{attributes:true,attributeFilter:['hidden']});majReprendre();window.__v7={enCours,majReprendre}}
 // ---------- démarrage ----------
 (async()=>{{const J=await (await fetch('niveaux.json',{cache:'no-cache'})).json();NMAIN=J.niveaux.length;DATA=[...J.niveaux,...(J.secrets||[]),null]}LV=DATA.map((d,i)=>d?lvInfo(d,i):null);LV[9].boss=1;let ls=null;try{ls=JSON.parse(localStorage.getItem(KEY)||'null')}catch(e){}const ix=await idbGet();const m=merge(ls,ix);if(m)S={...S,...m,v:2};S.stars=S.stars||{};S.vu=S.vu||{};if(S.vu.vir===undefined&&m&&m.vu&&m.vu.vir)S.vu.vir=1;
  S.unlocked=Math.min(S.unlocked,NMAIN);for(const k of['ecl','own','eq','res','buy','daily','gift','ach','sec','stat','chest','sets','wheel'])S[k]={...DEF[k],...(S[k]||{})};if(!Array.isArray(S.log))S.log=[];initV4();loadLevel(Math.min(S.unlocked,S.cur||1)-1);requestAnimationFrame(loop);window.__ready=true})();
