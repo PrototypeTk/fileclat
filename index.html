@@ -166,11 +166,11 @@ body.nuit #bJouer,body.nuit .grosbtn:not(.clair){background:#eceef2;color:#1d202
 <script type="importmap">{"imports":{"three":"./vendor/three.module.min.js"}}</script>
 <script type="module">
 import * as THREE from 'three';
-const VERSION='v7';window.__version=VERSION;
+const VERSION='v8';window.__version=VERSION;
 const $=id=>document.getElementById(id);
 // ---------- niveaux ----------
 let LV=[],DATA=null,NMAIN=15;// niveaux précalculés hors ligne par gen-niveaux.js -> niveaux.json
-const MECA={vir:{lv:'r',t:'<b>Nouveau : le virage.</b> Quand une flèche passe sur cette tuile ronde, elle tourne d’un quart de tour dans le sens du symbole, puis continue tout droit.'},
+const MECA={vir:{lv:'r',t:'<b>Nouveau : le virage.</b> Quand une flèche passe sur cette tuile ronde, elle repart toujours dans le sens de la flèche blanche dessinée, d’où qu’elle vienne.'},
  cle:{lv:'lock',t:'<b>Nouveau : clé et cadenas.</b> Une flèche cadenassée ne sort qu’après la flèche clé de la même couleur.'},
  portail:{lv:'p',t:'<b>Nouveau : les portails.</b> Une flèche qui entre dans un anneau ressort par l’autre anneau de la même couleur, dans le sens de son petit triangle.'},
  double:{lv:'dbl',t:'<b>Nouveau : double pointe.</b> Touche près d’un bout pour la faire sortir de ce côté.'},
@@ -201,11 +201,11 @@ function build(L){
  function ray(h,d,useOcc){let cur=h,dir=d;const out=[],jumps=[],seen=new Set();
   for(let i=0;i<3000;i++){const r=step(cur,dir);if(r.convex)return{cells:out,jumps,dir,ok:true};if(r.concave)return{ok:false,wall:true};
    let c=r.id;dir=r.d;if(useOcc&&occ[c]>=0)return{ok:false};out.push(c);
-   if(red[c])dir=turn(cells[c].n,dir,red[c]);else if(por.has(c)){const p=por.get(c);jumps.push(out.length-1);c=p.to;dir=por.get(c).dir;out.push(c)}
+   if(red[c])dir=red[c]-1;else if(por.has(c)){const p=por.get(c);jumps.push(out.length-1);c=p.to;dir=por.get(c).dir;out.push(c)}
    const sk=c*6+dir;if(seen.has(sk))return{ok:false};seen.add(sk);cur=c}return{ok:false}}
  W.ray=ray;
- const redList=L.red.map(([c,sg])=>{red[c]=sg;return c}),porList=L.por.map(([x,y,dx,dy],i)=>{por.set(x,{to:y,dir:dx,col:i});por.set(y,{to:x,dir:dy,col:i});return[x,y]});
- W.red=red;W.por=por;W.redList=redList;W.porList=porList;
+ const redList=L.red.map(([c,d])=>{red[c]=d+1;return c}),porList=L.por.map(([x,y,dx,dy],i)=>{por.set(x,{to:y,dir:dx,col:i});por.set(y,{to:x,dir:dy,col:i});return[x,y]});
+ W.redir=(c,d)=>red[c]?red[c]-1:d;W.red=red;W.por=por;W.redList=redList;W.porList=porList;
  const own=new Int32Array(cells.length).fill(-1);
  const arrows=L.arrows.map((o,id)=>{const ends=o.e.map((d,k)=>{const h=k?o.b[0]:o.b.at(-1),r=ray(h,d,false);return{dir:d,path:r.cells||[],jumps:r.jumps||[],exitDir:r.dir??d,ok:r.ok}});o.b.forEach(c=>own[c]=id);
   return{id,body:o.b,ends,dbl:o.e.length>1,lock:o.l??-1,col:o.c??-1,isKey:!!o.k,ice:o.i||0}});
@@ -273,7 +273,7 @@ const T=128;function drawTile(g,i){g.save();g.translate((i%4)*T,(i>>2)*T);g.line
  else if(i<10){disc(i==8?'#a9dcf2':'#4f9fd0');g.strokeStyle='#fff';g.lineWidth=T*.06;for(let k=0;k<3;k++){const a=k*Math.PI/3;g.beginPath();g.moveTo(c-Math.cos(a)*T*.28,c-Math.sin(a)*T*.28);g.lineTo(c+Math.cos(a)*T*.28,c+Math.sin(a)*T*.28);g.stroke()}
   if(i==9){g.fillStyle='#fff';g.font=`bold ${T*.26}px sans-serif`;g.textAlign='center';g.textBaseline='middle';g.fillStyle='#1f4f73';g.beginPath();g.arc(T*.78,T*.22,T*.15,0,7);g.fill();g.fillStyle='#fff';g.fillText('2',T*.78,T*.23)}}
  else if(i<14){const col=PAL[i-10];g.fillStyle='rgba(255,255,255,.9)';g.beginPath();g.arc(c,c,T*.44,0,7);g.fill();g.strokeStyle=col;g.lineWidth=T*.11;g.beginPath();g.arc(c,c,T*.3,0,7);g.stroke();g.fillStyle=col;g.beginPath();g.moveTo(T*.98,c);g.lineTo(T*.76,c-T*.13);g.lineTo(T*.76,c+T*.13);g.fill();g.beginPath();g.arc(c,c,T*.1,0,7);g.fill()}
- else{disc('#3a8f86');g.strokeStyle='#fff';g.lineWidth=T*.085;if(i==15){g.translate(T,0);g.scale(-1,1)}g.beginPath();g.moveTo(T*.62,T*.74);g.lineTo(T*.62,T*.52);g.arcTo(T*.62,T*.36,T*.46,T*.36,T*.16);g.lineTo(T*.32,T*.36);g.stroke();g.beginPath();g.moveTo(T*.42,T*.24);g.lineTo(T*.29,T*.36);g.lineTo(T*.42,T*.48);g.stroke()}
+ else{disc('#3a8f86');g.strokeStyle='#fff';g.lineWidth=T*.085;g.lineCap='round';g.beginPath();g.moveTo(T*.24,T*.5);g.lineTo(T*.62,T*.5);g.stroke();g.fillStyle='#fff';g.beginPath();g.moveTo(T*.8,T*.5);g.lineTo(T*.56,T*.32);g.lineTo(T*.56,T*.68);g.closePath();g.fill()}
  g.restore()}
 const atlas=mkTex(g=>{for(let i=0;i<16;i++)drawTile(g,i)},4*T);
 let rbMesh,rbSet=new Set(),rbN=0,rbGot=[],err=0,used=0,resUsed=0,lost=false,combo=0,lastOk=0,comboGain=0;let W,off,shapeMesh,markMesh,arrowMesh,hintMesh,quadCell,occ,alive,ice,lvl=0,moves=0,bon=[3,2,1],undo=[],anims=[],hint=null,hintT=0,mode='',won=false,lastEnd=-1;
@@ -306,7 +306,7 @@ const arrowCol=a=>ice[a.id]==2?COL.ice2:ice[a.id]==1?COL.ice1:a.isKey?new THREE.
 function quad(pos,uv,idx,c,tile,dirU,scale){const n=W.cells[c].n,ta=N[dirU??W.tang(n)[0]],tb=cross(N[n],ta),p=ctr(c,LIFT*1.5),b=pos.length/3,u0=(tile%4)/4,v0=1-((tile>>2)+1)/4;
  for(const [u,v] of[[-.5,-.5],[.5,-.5],[.5,.5],[-.5,.5]]){pos.push(p.x+(ta[0]*u+tb[0]*v)*scale,p.y+(ta[1]*u+tb[1]*v)*scale,p.z+(ta[2]*u+tb[2]*v)*scale);uv.push(u0+(u+.5)/4,v0+(v+.5)/4)}idx.push(b,b+1,b+2,b,b+2,b+3)}
 function rebuild(){const out=[],cols=[];const anim=new Set(anims.map(x=>x.a.id));const ro=[],rc=[];for(const a of W.arrows)if(alive[a.id]&&!anim.has(a.id)){if(rbSet.has(a.id)&&!ice[a.id])ribbon(a,0,0,ro,rc,COL.base);else ribbon(a,0,0,out,cols,arrowCol(a))}arrowMesh.geometry.dispose();arrowMesh.geometry=geo(out,cols);rbMesh.geometry.dispose();rbMesh.geometry=geo(ro,rc);rbN=ro.length/3;
- const mp=[],mu=[],mi=[];W.redList.forEach(c=>quad(mp,mu,mi,c,W.red[c]>0?14:15,null,.9));for(const [c,p] of W.por)quad(mp,mu,mi,c,10+p.col,p.dir,.95);
+ const mp=[],mu=[],mi=[];W.redList.forEach(c=>quad(mp,mu,mi,c,14,W.red[c]-1,.9));for(const [c,p] of W.por)quad(mp,mu,mi,c,10+p.col,p.dir,.95);
  for(const a of W.arrows){if(!alive[a.id]||anim.has(a.id))continue;const mc=a.body[a.body.length>>1];
   if(ice[a.id])quad(mp,mu,mi,mc,ice[a.id]==2?9:8,null,.78);else if(a.lock>=0&&alive[a.lock])quad(mp,mu,mi,mc,4+a.col,null,.72);else if(a.isKey)quad(mp,mu,mi,mc,a.col,null,.72)}
  const gm=new THREE.BufferGeometry();gm.setAttribute('position',new THREE.Float32BufferAttribute(mp,3));gm.setAttribute('uv',new THREE.Float32BufferAttribute(mu,2));gm.setIndex(mi);markMesh.geometry.dispose();markMesh.geometry=gm;
@@ -320,7 +320,7 @@ function loadLevel(i){if(i<NMAIN)S.cur=i+1;lvl=i;$('win').hidden=true;$('echec')
  arrowMesh=new THREE.Mesh(new THREE.BufferGeometry(),matA);hintMesh=new THREE.Mesh(new THREE.BufferGeometry(),matH);hintMesh.renderOrder=2;markMesh=new THREE.Mesh(new THREE.BufferGeometry(),matM);markMesh.renderOrder=3;rbMesh=new THREE.Mesh(new THREE.BufferGeometry(),matA);scene.add(shapeMesh,arrowMesh,hintMesh,markMesh,rbMesh);rbSet=pickRainbow();
  occ=new Int32Array(W.cells.length).fill(-1);alive=W.arrows.map(()=>true);ice=W.arrows.map(a=>a.ice);const st=S.lv[i+1];moves=0;bon=[...BONUS];undo=[];hint=null;mode='';won=false;err=0;used=0;resUsed=0;rbGot=[];let camS=null;
  // une partie en cours n'est reprise que si le niveau est exactement le même (signature) ; sinon il repart proprement
- if(st&&!st.fini&&st.sig===W.sig){for(const id of st.rm||[])alive[id]=false;moves=st.mv||0;bon=st.b||bon;undo=st.u||[];if(st.ice)ice=st.ice;err=st.er||0;used=st.us??moves;resUsed=st.ru||0;rbGot=st.rg||[];comboGain=st.cg||0;camS=st.cam||null;if(!alive.some(x=>x)){alive=W.arrows.map(()=>true);ice=W.arrows.map(a=>a.ice);moves=0;err=0;used=0;undo=[];bon=[...BONUS];resUsed=0;rbGot=[];comboGain=0}}else if(st&&st.sig!==W.sig)delete S.lv[i+1];
+ if(st&&!st.fini&&st.sig===W.sig){for(const id of st.rm||[])alive[id]=false;moves=st.mv||0;bon=st.b||bon;undo=st.u||[];if(st.ice)ice=st.ice;err=st.er||0;used=st.us??moves;resUsed=st.ru||0;rbGot=st.rg||[];comboGain=st.cg||0;camS=st.cam||null;if(!alive.some(x=>x)){alive=W.arrows.map(()=>true);ice=W.arrows.map(a=>a.ice);moves=0;err=0;used=0;undo=[];bon=[...BONUS];resUsed=0;rbGot=[];comboGain=0}}else if(st&&st.sig!==W.sig){const enJeu=!st.fini&&((st.rm&&st.rm.length)||st.mv);delete S.lv[i+1];if(enJeu)setTimeout(()=>toast('Niveau mis à jour : la partie repart du début (progression gardée)'),300)}
  W.arrows.forEach(a=>{if(alive[a.id])for(const c of a.body)occ[c]=a.id});
  fit();if(camS){cam.position.fromArray(camS[0]);cam.up.fromArray(camS[1]);ctl.orient();cam.updateMatrixWorld()}applyLook();rebuild();ui();saveNow();bulleQ=Object.keys(MECA).filter(m=>(LV[i][MECA[m].lv]||0)>0&&!S.vu[m]);
  for(const k of['boss','geant','limf','secret'])if(LV[i][k]&&!S.vu[k+':'+(i+1)])bulleQ.push(k+':'+(i+1));nextBulle()}
@@ -686,7 +686,7 @@ function initV6(){$('bDefi').innerHTML='<span>📅</span>';$('bCadeau').innerHTM
  accUI=function(){soldeUI();const D=S.daily,dot=(id,v)=>$(id).classList.toggle('dispo',!!v);dot('bDefi',D.last!=dayStr());dot('bCadeau',giftReady());dot('bRoue',wheelReady());dot('bQuetes',quests().some(q=>q.prog>=q.goal&&!q.claimed));
   dot('bCoffres',Array.from({length:Math.floor(NMAIN/5)},(_,i)=>(i+1)*5).some(n=>S.done[n]!=null&&!S.chest[n]));dot('bRang',false);$('bDefi').setAttribute('aria-label','Défi du jour'+(D.streak?` – série ${D.streak}`:''))};accUI();
  const oc=ouvrirCarte;ouvrirCarte=function(){oc();accUI()}}
-window.__v6={cellNormal:c=>N[W.cells[c].n],pickAt:(x,y)=>pick(x,y),pMap:()=>!!pMat.map,dtapN:()=>dtapN,viewAll,lastTap:()=>lastTap,hitCell,fitD:()=>fitD,coffresUI,feuille,hintCol:()=>'#'+COL.hint.getHexString()};
+window.__v8={W:()=>W,mark:()=>markMesh,atlas:()=>atlas.image,N};window.__v6={cellNormal:c=>N[W.cells[c].n],pickAt:(x,y)=>pick(x,y),pMap:()=>!!pMat.map,dtapN:()=>dtapN,viewAll,lastTap:()=>lastTap,hitCell,fitD:()=>fitD,coffresUI,feuille,hintCol:()=>'#'+COL.hint.getHexString()};
 // ---------- v7 : Reprendre ----------
 const sigC={};function sigOf(n){if(!(n in sigC)){try{sigC[n]=gen(n-1).sig}catch(e){sigC[n]=null}}return sigC[n]}
 function enCours(){const n=S.last||S.cur,st=S.lv&&S.lv[n];return n>=1&&n<=NMAIN&&n<=S.unlocked&&st&&!st.fini&&st.sig&&((st.rm&&st.rm.length)||st.mv)&&st.sig===sigOf(n)?n:0}
@@ -709,7 +709,7 @@ window.__fc={lvl:()=>lvl+1,moves:()=>moves,bon:()=>[...bon],alive:()=>alive.filt
  // données exactes du niveau chargé, pour le solveur indépendant du test
  data(){return{K:W.K,solid:(()=>{const s=[];for(let x=0;x<W.K;x++)for(let y=0;y<W.K;y++)for(let z=0;z<W.K;z++)if(W.solid(x,y,z))s.push([x,y,z]);return s})(),
   arrows:W.arrows.map(a=>({body:a.body.map(c=>[...W.cells[c].v,W.cells[c].n]),dbl:a.dbl,lock:a.lock,ice:a.ice,alive:alive[a.id],iceNow:ice[a.id]})),
-  red:W.redList.map(c=>[...W.cells[c].v,W.cells[c].n,W.red[c]]),por:[...W.por].map(([c,p])=>({a:[...W.cells[c].v,W.cells[c].n],b:[...W.cells[p.to].v,W.cells[p.to].n],dir:p.dir}))}},
+  red:W.redList.map(c=>[...W.cells[c].v,W.cells[c].n,W.red[c]-1]),por:[...W.por].map(([c,p])=>({a:[...W.cells[c].v,W.cells[c].n],b:[...W.cells[p.to].v,W.cells[p.to].n],dir:p.dir}))}},
  info(){const fr=playList().length;return{arrows:W.arrows.length,depth:W.depth,cells:W.cells.length,cov:W.arrows.reduce((t,a)=>t+a.body.length,0)/W.cells.length,k:LV[lvl].k*(LV[lvl].sub||1),shape:LV[lvl].s,free:fr,red:W.redList.length,por:W.porList.length,lock:W.arrows.filter(a=>a.lock>=0).length,ice:W.arrows.filter(a=>a.ice).length,dbl:W.arrows.filter(a=>a.dbl).length}},
  find(kind){for(const a of W.arrows){if(!alive[a.id])continue;
    if(kind=='red'||kind=='por'){const p=a.ends[0].path,i=p.findIndex(c=>kind=='red'?W.red[c]:W.por.has(c));if(i>=0&&!a.dbl&&!a.ice&&a.lock<0)return{id:a.id,before:p.slice(0,i+1),after:p.slice(i+(kind=='por'?2:1)),special:p[i]}}

@@ -1,4 +1,4 @@
-// Filéclat – génération HORS LIGNE des 15 niveaux -> niveaux.json
+// Flèchemania – génération HORS LIGNE des 15 niveaux -> niveaux.json
 // Méthode : « épluchage » d'une surface pleine. On construit les flèches dans l'ORDRE DE SORTIE :
 // la flèche n°k a sa pointe sur une case libre et sa trajectoire de sortie (tout droit, virages, portails,
 // jusqu'à une arête extérieure, jamais un mur) ne traverse QUE des cases déjà prises par les flèches 0..k-1
@@ -38,10 +38,10 @@ function make(L,seed){const G=geom(L),{cells,step,tang,nbrs}=G,n=cells.length,R=
  const freeSpot=c=>!special(c)&&flat(c)&&nbrs(c).every(x=>!special(x)&&flat(x));
  function ray(h,d){let cur=h,dir=d;const out=[],seen=new Set();
   for(let i=0;i<4000;i++){const r=step(cur,dir);if(r.convex)return{cells:out,dir,ok:true};if(r.concave)return{ok:false};
-   let c=r.id;dir=r.d;out.push(c);if(red[c])dir=turn(cells[c].n,dir,red[c]);else if(por.has(c)){const p=por.get(c);c=p.to;dir=por.get(c).dir;out.push(c)}
+   let c=r.id;dir=r.d;out.push(c);if(red[c])dir=red[c]-1;else if(por.has(c)){const p=por.get(c);c=p.to;dir=por.get(c).dir;out.push(c)}
    const sk=c*6+dir;if(seen.has(sk))return{ok:false};seen.add(sk);cur=c}return{ok:false}}
  const redL=[],porL=[];
- for(let t=0;redL.length<(L.r||0)&&t<2000;t++){const c=R()*n|0;if(freeSpot(c)){red[c]=R()<.5?1:-1;redL.push(c)}}
+ for(let t=0;redL.length<(L.r||0)&&t<2000;t++){const c=R()*n|0;if(freeSpot(c)){const tg=tang(cells[c].n).filter(d=>ray(c,d).ok);if(tg.length){red[c]=tg[R()*tg.length|0]+1;redL.push(c)}}}
  for(let t=0;porL.length<(L.p||0)&&t<5000;t++){const a=R()*n|0,b=R()*n|0;if(a==b||cells[a].n==cells[b].n||!freeSpot(a)||!freeSpot(b))continue;
   const da=pick(tang(cells[a].n)),db=pick(tang(cells[b].n));por.set(a,{to:b,dir:da,col:porL.length});por.set(b,{to:a,dir:db,col:porL.length});
   if(!ray(a,da).ok||!ray(b,db).ok){por.delete(a);por.delete(b);continue}porL.push([a,b])}
@@ -74,6 +74,9 @@ function make(L,seed){const G=geom(L),{cells,step,tang,nbrs}=G,n=cells.length,R=
  const nbA=arrows.map((a,i)=>{const s=new Set();a.b.forEach(c=>nbrs(c).forEach(x=>{if(asg[x]>=0&&asg[x]!==i)s.add(asg[x])}));return[...s]});
  for(let p=0;p<(L.lock||0);p++){const cs=arrows.map((a,i)=>i).filter(i=>i>arrows.length*.3&&arrows[i].c<0);if(!cs.length)break;const l=pick(cs);const ks=arrows.map((a,i)=>i).filter(i=>i<l&&i>l-60&&arrows[i].c<0);if(!ks.length)continue;const k=pick(ks);arrows[l].l=k;arrows[l].c=p;arrows[k].c=p;arrows[k].key=1}
  for(let p=0;p<(L.ice||0);p++){const cs=arrows.map((a,i)=>i).filter(i=>arrows[i].c<0&&!arrows[i].ice&&nbA[i].filter(j=>j<i).length>=1);if(!cs.length)break;const f=pick(cs);arrows[f].ice=nbA[f].filter(j=>j<f).length>=2&&R()<.45?2:1}
+ // redirecteur que nulle trajectoire ne traverse : retiré (aucune trajectoire ne change)
+ {const pass=new Set();for(const a of arrows){for(const [h,d] of[[a.b.at(-1),a.e0],...(a.dbl?[[a.b[0],a.e1]]:[])]){const r=ray(h,d);if(r.cells)r.cells.forEach(c=>pass.add(c))}}
+  for(let i=redL.length-1;i>=0;i--)if(!pass.has(redL[i])&&redL.length>1){red[redL[i]]=0;redL.splice(i,1)}}
  const covered=arrows.reduce((s,a)=>s+a.b.length,0),usable=n-redL.length-porL.length*2;
  const used=redL.every(rc=>arrows.some(a=>{const r=ray(a.b.at(-1),a.e0);return r.ok&&r.cells.includes(rc)}))&&porL.every(([x])=>arrows.some(a=>{const r=ray(a.b.at(-1),a.e0);return r.ok&&r.cells.includes(x)}));
  // nombre de vagues (tours où l'on sort toutes les flèches jouables) – mesure de profondeur
@@ -81,7 +84,7 @@ function make(L,seed){const G=geom(L),{cells,step,tang,nbrs}=G,n=cells.length,R=
  const al=arrows.map(()=>true),ic=arrows.map(a=>a.ice);let rounds=0,left=arrows.length;
  while(left){const f=arrows.map((a,i)=>i).filter(i=>al[i]&&!ic[i]&&!(arrows[i].l>=0&&al[arrows[i].l])&&paths[i].some(p=>p.every(c=>own[c]<0||own[c]==i)));if(!f.length){rounds=-1;break}rounds++;
   for(const i of f){al[i]=false;left--;arrows[i].b.forEach(c=>own[c]=-1);nbA[i].forEach(j=>{if(al[j]&&ic[j])ic[j]--})}}
- return{rounds,L,arrows,red:redL.map(c=>[c,red[c]]),por:porL.map(([a,b])=>[a,b,por.get(a).dir,por.get(b).dir]),cells:n,cov:covered/usable,nFree,used,maxWave:Math.max(...wave)}}
+ return{rounds,L,arrows,red:redL.map(c=>[c,red[c]-1]),por:porL.map(([a,b])=>[a,b,por.get(a).dir,por.get(b).dir]),cells:n,cov:covered/usable,nFree,used,maxWave:Math.max(...wave)}}
 const LV=[
  {s:'cube',k:6,len:[3,8],run:4},
  {s:'esc',k:7,len:[3,6],run:4},

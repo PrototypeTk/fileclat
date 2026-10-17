@@ -4,3 +4,4 @@ node_modules/
 test*.js
 gen-v4.js
 perf-*.js
+verif-*.sh
